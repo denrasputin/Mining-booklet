@@ -26,16 +26,22 @@
             font-display: swap;
         }
 
-        /* --- Global Styles & Variables --- */
         :root {
-            --primary-color: #003366; /* Deep Blue */
-            --secondary-color: #f4f4f4; /* Light Gray */
-            --accent-color: #f7b733;
-            --text-color: #333;
-            --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-            --border-radius: 18px;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --transition-speed: 0.3s;
+            --bg-primary: #eef2ff;
+            --bg-secondary: #f9fafc;
+            --ink-primary: #0f172a;
+            --ink-secondary: rgba(15, 23, 42, 0.72);
+            --accent: #7fb5ff;
+            --accent-strong: #2f6bff;
+            --glass-border: rgba(255, 255, 255, 0.52);
+            --glass-inner: rgba(255, 255, 255, 0.65);
+            --shadow-soft: 0 30px 80px rgba(15, 23, 42, 0.18);
+            --shadow-card: 0 18px 50px rgba(15, 23, 42, 0.16);
+            --radius-large: 28px;
+            --radius-medium: 22px;
+            --radius-pill: 999px;
+            --transition-fast: 0.25s ease;
+            --transition-medium: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         * {
@@ -46,263 +52,380 @@
 
         body {
             font-family: 'Gotham Pro', 'GothamPro', sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #eef4ff 40%, #f9fbff 100%);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
             min-height: 100vh;
+            color: var(--ink-primary);
+            line-height: 1.65;
             position: relative;
+            overflow-x: hidden;
         }
 
-        body::before {
+        body::before,
+        body::after {
             content: "";
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 15% 20%, rgba(247, 183, 51, 0.18), transparent 55%),
-                        radial-gradient(circle at 85% 10%, rgba(0, 51, 102, 0.15), transparent 60%),
-                        radial-gradient(circle at 80% 75%, rgba(0, 138, 230, 0.12), transparent 55%);
-            z-index: -1;
-            opacity: 0.85;
+            pointer-events: none;
+            z-index: -2;
         }
 
-        /* --- Header & Logos --- */
+        body::before {
+            background: radial-gradient(circle at 12% 18%, rgba(127, 181, 255, 0.6), transparent 55%),
+                        radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.9), transparent 45%),
+                        radial-gradient(circle at 84% 76%, rgba(168, 212, 255, 0.45), transparent 58%);
+            filter: blur(20px);
+            opacity: 0.9;
+        }
+
+        body::after {
+            background: radial-gradient(ellipse at 30% 70%, rgba(54, 98, 245, 0.18), transparent 55%),
+                        radial-gradient(ellipse at 68% 60%, rgba(97, 191, 255, 0.22), transparent 65%);
+            filter: blur(40px);
+            opacity: 0.8;
+            animation: backgroundFlow 18s ease-in-out infinite alternate;
+        }
+
         header {
+            position: sticky;
+            top: 24px;
+            margin: 0 auto;
+            width: min(1080px, calc(100% - 40px));
+            padding: 18px 28px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 18px 40px;
-            background: var(--glass-bg);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-            transition: padding var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            gap: 24px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+            backdrop-filter: blur(22px) saturate(130%);
+            transition: all var(--transition-medium);
+            z-index: 20;
         }
 
-        header .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 30px;
+        header::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity var(--transition-fast);
         }
 
-        header .logo {
-            max-height: 60px;
-            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
-            animation: float 6s ease-in-out infinite;
+        header:hover::after {
+            opacity: 1;
         }
 
         header.is-scrolled {
-            padding: 12px 40px;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+            padding: 12px 24px;
+            backdrop-filter: blur(26px) saturate(140%);
+            transform: translateY(-12px);
+            box-shadow: 0 22px 50px rgba(15, 23, 42, 0.18);
         }
 
-        /* --- Main Content --- */
+        header .logo {
+            height: 54px;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 20px rgba(15, 23, 42, 0.12));
+            transition: transform var(--transition-medium);
+        }
+
+        header:hover .logo {
+            transform: translateY(-4px);
+        }
+
         .main-container {
-            max-width: 1200px;
-            margin: 50px auto 60px;
-            padding: 0 20px 60px;
+            width: min(1120px, 100%);
+            margin: 70px auto 100px;
+            padding: 0 24px 80px;
+            position: relative;
+        }
+
+        .main-container::before {
+            content: "";
+            position: absolute;
+            inset: -120px 10% auto 10%;
+            height: 420px;
+            background: linear-gradient(130deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+            border-radius: 60px;
+            filter: blur(22px);
+            z-index: -1;
+            opacity: 0.8;
         }
 
         .hero {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 28px;
-            padding: 40px 45px;
-            margin-bottom: 45px;
-            box-shadow: 0 25px 60px rgba(0, 22, 66, 0.12);
             position: relative;
+            padding: 54px clamp(24px, 8vw, 72px);
+            border-radius: var(--radius-large);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: var(--shadow-soft);
             overflow: hidden;
-            animation: fadeInDown 0.8s ease-out both;
+            backdrop-filter: blur(26px) saturate(150%);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0);
+            opacity: 0.6;
         }
 
         .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 51, 102, 0.12), transparent 55%),
-                        linear-gradient(315deg, rgba(247, 183, 51, 0.14), transparent 60%);
-            z-index: 0;
+            width: clamp(200px, 35vw, 320px);
+            height: clamp(200px, 35vw, 320px);
+            top: -18%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(130, 178, 255, 0.45), rgba(130, 178, 255, 0));
+            animation: orbFloat 16s ease-in-out infinite;
+        }
+
+        .hero::after {
+            width: clamp(180px, 30vw, 260px);
+            height: clamp(180px, 30vw, 260px);
+            bottom: -20%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+            animation: orbFloat 20s ease-in-out infinite reverse;
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            text-align: center;
+            max-width: 680px;
         }
 
         .title {
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: clamp(2.2rem, 5vw, 3.1rem);
             font-weight: 600;
-            color: var(--primary-color);
+            letter-spacing: -0.02em;
+            color: var(--ink-primary);
             margin-bottom: 18px;
         }
 
         .subtitle {
-            font-size: 1.05rem;
-            max-width: 720px;
-            margin: 0 auto 26px;
-            color: rgba(51, 51, 51, 0.85);
-            line-height: 1.8;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            color: var(--ink-secondary);
+            margin-bottom: 32px;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             padding: 14px 28px;
-            background: linear-gradient(135deg, var(--primary-color), #005599);
-            color: #fff;
-            border-radius: 999px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(135deg, rgba(143, 190, 255, 0.45), rgba(92, 151, 255, 0.75));
+            color: var(--ink-primary);
             font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 15px 35px rgba(0, 51, 102, 0.28);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 18px 40px rgba(90, 138, 255, 0.25);
+            backdrop-filter: blur(16px);
+            transition: transform var(--transition-medium), box-shadow var(--transition-medium);
         }
 
         .cta-button::after {
             content: "→";
-            font-size: 1.1em;
-            transition: transform var(--transition-speed) ease;
+            transition: transform var(--transition-medium);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 22px 40px rgba(0, 51, 102, 0.33);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 26px 55px rgba(90, 138, 255, 0.32);
         }
 
         .cta-button:hover::after {
-            transform: translateX(4px);
+            transform: translateX(6px);
         }
 
-        /* --- Grid for People --- */
         .people-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(24px, 4vw, 36px);
+            margin-top: 64px;
         }
 
-        /* --- Person Card --- */
         .person-card {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            overflow: hidden;
             position: relative;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(155deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.68));
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transform: translate3d(0, 28px, 0);
             opacity: 0;
-            transform: translateY(40px);
-            filter: blur(6px);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            will-change: transform, opacity;
+            filter: saturate(110%);
+            transition: transform var(--transition-medium), box-shadow var(--transition-medium), opacity 0.6s ease;
+            backdrop-filter: blur(24px) saturate(160%);
+        }
+
+        .person-card::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: calc(var(--radius-medium) - 12px);
+            background: linear-gradient(150deg, rgba(255, 255, 255, 0.92) 0%, rgba(241, 244, 255, 0.48) 100%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .person-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+            mix-blend-mode: screen;
+            opacity: 0;
+            transition: opacity var(--transition-medium);
         }
 
         .person-card.is-visible {
-            animation: cardReveal 0.75s ease-out forwards;
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
         }
 
         .person-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 28px 45px rgba(0, 0, 0, 0.16);
+            box-shadow: 0 26px 60px rgba(15, 23, 42, 0.22);
         }
 
-        .person-card .photo-container {
-            width: 100%;
-            height: 350px;
-            overflow: hidden;
+        .person-card:hover::after {
+            opacity: 0.4;
+        }
+
+        .photo-container {
             position: relative;
+            overflow: hidden;
+            height: 320px;
+            border-radius: calc(var(--radius-medium) - 2px) calc(var(--radius-medium) - 2px) 0 0;
+        }
+
+        .photo-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 40%, rgba(15, 23, 42, 0.1) 100%);
+            mix-blend-mode: screen;
         }
 
         .person-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
-            transition: transform 0.45s ease;
+            transform: scale(1.05);
+            transition: transform var(--transition-medium);
         }
 
         .person-card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.12);
         }
 
-        .person-card .info {
-            padding: 20px;
-            text-align: center; /* <-- Это добавленное свойство */
+        .info {
             position: relative;
+            padding: 26px 28px 32px;
+            text-align: center;
+            z-index: 1;
         }
 
-        .person-card .name {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-            letter-spacing: 0.02em;
+        .name {
+            font-size: 1.35rem;
+            color: var(--ink-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
         }
 
-        .person-card .name .surname {
+        .surname {
             display: block;
             font-weight: 700;
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
-        .person-card .name .given-name {
+        .given-name {
             display: block;
             font-weight: 400;
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
-        .person-card .title-role {
-            font-size: 1rem;
-            color: rgba(51, 51, 51, 0.75);
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
-            line-height: 1.7;
+        .title-role {
+            font-size: 0.96rem;
+            color: var(--ink-secondary);
         }
 
-        .person-card::after {
-            content: "";
-            position: absolute;
-            inset: 18px;
-            border-radius: calc(var(--border-radius) - 12px);
-            border: 1px solid rgba(247, 183, 51, 0.22);
-            opacity: 0;
-            transform: scale(0.98);
-            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
-            pointer-events: none;
-        }
+        .people-grid .person-card:nth-child(1) { transition-delay: 0.05s; }
+        .people-grid .person-card:nth-child(2) { transition-delay: 0.1s; }
+        .people-grid .person-card:nth-child(3) { transition-delay: 0.15s; }
+        .people-grid .person-card:nth-child(4) { transition-delay: 0.2s; }
+        .people-grid .person-card:nth-child(5) { transition-delay: 0.25s; }
+        .people-grid .person-card:nth-child(6) { transition-delay: 0.3s; }
+        .people-grid .person-card:nth-child(7) { transition-delay: 0.35s; }
+        .people-grid .person-card:nth-child(8) { transition-delay: 0.4s; }
 
-        .person-card:hover::after {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .people-grid .person-card:nth-child(1).is-visible { animation-delay: 0.05s; }
-        .people-grid .person-card:nth-child(2).is-visible { animation-delay: 0.1s; }
-        .people-grid .person-card:nth-child(3).is-visible { animation-delay: 0.15s; }
-        .people-grid .person-card:nth-child(4).is-visible { animation-delay: 0.2s; }
-        .people-grid .person-card:nth-child(5).is-visible { animation-delay: 0.25s; }
-        .people-grid .person-card:nth-child(6).is-visible { animation-delay: 0.3s; }
-        .people-grid .person-card:nth-child(7).is-visible { animation-delay: 0.35s; }
-        .people-grid .person-card:nth-child(8).is-visible { animation-delay: 0.4s; }
-
-        /* --- Animations & Motion Preferences --- */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes cardReveal {
+        @keyframes backgroundFlow {
             0% {
-                opacity: 0;
-                transform: translateY(40px);
-                filter: blur(6px);
+                transform: translate3d(-2%, 0, 0) scale(1.02);
             }
             100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
+                transform: translate3d(2%, -2%, 0) scale(1.05);
+            }
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(12px, -10px, 0) scale(1.05);
+            }
+            100% {
+                transform: translate3d(-10px, 12px, 0) scale(0.98);
+            }
+        }
+
+        @media (max-width: 960px) {
+            header {
+                top: 18px;
+            }
+
+            .hero {
+                padding: 46px 40px;
+            }
+
+            .photo-container {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                width: calc(100% - 32px);
+                top: 16px;
+                padding: 14px 20px;
+            }
+
+            .hero {
+                padding: 36px 28px;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+            }
+
+            .info {
+                padding: 22px 20px 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-button {
+                width: 100%;
+            }
+
+            .photo-container {
+                height: 240px;
             }
         }
 
@@ -315,55 +438,8 @@
             }
 
             .person-card {
-                opacity: 1;
-                transform: none;
-                filter: none;
-            }
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 16px 24px;
-            }
-
-            header.is-scrolled {
-                padding: 10px 24px;
-            }
-
-            .logo-container {
-                flex-direction: column;
-                gap: 18px;
-            }
-
-            .hero {
-                padding: 32px 24px;
-            }
-
-            .subtitle {
-                font-size: 0.98rem;
-            }
-
-            .person-card .photo-container {
-                height: 280px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .person-card .info {
-                padding: 18px 16px 24px;
-            }
-
-            .person-card::after {
-                inset: 14px;
+                transform: none !important;
+                opacity: 1 !important;
             }
         }
     </style>
@@ -371,22 +447,21 @@
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="https://digital.spmi.ru/images/header/only_logo.png" alt="Логотип Горного Университета 1" class="logo">
-            <img src="https://msk.1mf.ru/upload/iblock/372/k1ky3ldj0wc3q3wusd121t8i9687r71t/Горный%20университет,%20г.%20Санкт-Петербург.png" alt="Логотип Горного Университета 2" class="logo">
-        </div>
+        <img src="https://digital.spmi.ru/images/header/only_logo.png" alt="Логотип Горного Университета 1" class="logo">
+        <img src="https://msk.1mf.ru/upload/iblock/372/k1ky3ldj0wc3q3wusd121t8i9687r71t/Горный%20университет,%20г.%20Санкт-Петербург.png" alt="Логотип Горного Университета 2" class="logo">
     </header>
 
     <main class="main-container">
         <section class="hero">
             <div class="hero-content">
                 <h1 class="title">Список получателей брошюры Санкт-Петербургского горного университета</h1>
-                <p class="subtitle">Здесь представлены ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики и партнерских проектах университета.</p>
+                <p class="subtitle">Представляем ключевых представителей отрасли и государственных структур, которым переданы материалы о развитии энергетики, научных инициативах и партнёрских проектах университета.</p>
                 <a class="cta-button" href="#recipients">Смотреть список</a>
             </div>
         </section>
+
         <div id="recipients" class="people-grid">
-            
+
             <div class="person-card">
                 <div class="photo-container">
                     <img src="https://minenergo.gov.ru/upload/iblock/3a2/TSivilyev_4-_glavnaya_1.png" alt="Фото Цивилева Сергея Евгеньевича">
@@ -451,7 +526,7 @@
                     <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
                 </div>
             </div>
-            
+
             <div class="person-card">
                 <div class="photo-container">
                     <img src="https://static8.tgcnt.ru/posts/_0/97/9757cd6105755b85dad3e6ceaf83a91c.jpg" alt="Фото Кулапина Алексея Ивановича">
@@ -503,13 +578,13 @@
                     <p class="title-role">Директор по развитию ЕЭС – руководитель дирекции АО «СО ЕЭС»</p>
                 </div>
             </div>
-            
+
         </div>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.person-card');
+            const cards = document.querySelectorAll('.person-card');
             const header = document.querySelector('header');
 
             const observer = new IntersectionObserver((entries, obs) => {
@@ -520,17 +595,17 @@
                     }
                 });
             }, {
-                threshold: 0.1
+                threshold: 0.15
             });
 
-            animatedElements.forEach(element => observer.observe(element));
+            cards.forEach(card => observer.observe(card));
 
-            const toggleHeaderState = () => {
-                header.classList.toggle('is-scrolled', window.scrollY > 10);
+            const updateHeader = () => {
+                header.classList.toggle('is-scrolled', window.scrollY > 12);
             };
 
-            toggleHeaderState();
-            window.addEventListener('scroll', toggleHeaderState, { passive: true });
+            updateHeader();
+            window.addEventListener('scroll', updateHeader, { passive: true });
         });
     </script>
 
