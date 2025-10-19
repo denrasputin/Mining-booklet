@@ -8,8 +8,9 @@
         /* --- Font Import --- */
         @font-face {
             font-family: 'Gotham Pro';
-            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff2') format('woff2'),
-                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff') format('woff');
+            src: local('Gotham Pro'), local('GothamPro'),
+                 url('https://fonts.cdnfonts.com/s/16534/GothamPro.woff2') format('woff2'),
+                 url('https://fonts.cdnfonts.com/s/16534/GothamPro.woff') format('woff');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -17,8 +18,9 @@
 
         @font-face {
             font-family: 'Gotham Pro';
-            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff2') format('woff2'),
-                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff') format('woff');
+            src: local('Gotham Pro Bold'), local('GothamPro-Bold'),
+                 url('https://fonts.cdnfonts.com/s/16534/GothamPro-Bold.woff2') format('woff2'),
+                 url('https://fonts.cdnfonts.com/s/16534/GothamPro-Bold.woff') format('woff');
             font-weight: 700;
             font-style: normal;
             font-display: swap;
@@ -28,9 +30,12 @@
         :root {
             --primary-color: #003366; /* Deep Blue */
             --secondary-color: #f4f4f4; /* Light Gray */
+            --accent-color: #f7b733;
             --text-color: #333;
-            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
+            --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            --border-radius: 18px;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --transition-speed: 0.3s;
         }
 
         * {
@@ -40,11 +45,24 @@
         }
 
         body {
-            font-family: 'Gotham Pro', sans-serif;
-            background-color: #ffffff;
+            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #eef4ff 40%, #f9fbff 100%);
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(247, 183, 51, 0.18), transparent 55%),
+                        radial-gradient(circle at 85% 10%, rgba(0, 51, 102, 0.15), transparent 60%),
+                        radial-gradient(circle at 80% 75%, rgba(0, 138, 230, 0.12), transparent 55%);
+            z-index: -1;
+            opacity: 0.85;
         }
 
         /* --- Header & Logos --- */
@@ -52,12 +70,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 40px;
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 18px 40px;
+            background: var(--glass-bg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
             position: sticky;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            transition: padding var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
         }
 
         header .logo-container {
@@ -68,21 +89,90 @@
 
         header .logo {
             max-height: 60px;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header.is-scrolled {
+            padding: 12px 40px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
 
         /* --- Main Content --- */
         .main-container {
             max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: 50px auto 60px;
+            padding: 0 20px 60px;
+        }
+
+        .hero {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 40px 45px;
+            margin-bottom: 45px;
+            box-shadow: 0 25px 60px rgba(0, 22, 66, 0.12);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInDown 0.8s ease-out both;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.12), transparent 55%),
+                        linear-gradient(315deg, rgba(247, 183, 51, 0.14), transparent 60%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
         }
 
         .title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.5rem;
-            font-weight: 500;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 600;
             color: var(--primary-color);
+            margin-bottom: 18px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            max-width: 720px;
+            margin: 0 auto 26px;
+            color: rgba(51, 51, 51, 0.85);
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary-color), #005599);
+            color: #fff;
+            border-radius: 999px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 15px 35px rgba(0, 51, 102, 0.28);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .cta-button::after {
+            content: "→";
+            font-size: 1.1em;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 40px rgba(0, 51, 102, 0.33);
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(4px);
         }
 
         /* --- Grid for People --- */
@@ -94,30 +184,32 @@
 
         /* --- Person Card --- */
         .person-card {
-            background: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.96);
             border-radius: var(--border-radius);
             box-shadow: var(--card-shadow);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(40px);
+            filter: blur(6px);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            will-change: transform, opacity;
         }
-        
+
         .person-card.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+            animation: cardReveal 0.75s ease-out forwards;
         }
 
         .person-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-12px);
+            box-shadow: 0 28px 45px rgba(0, 0, 0, 0.16);
         }
 
         .person-card .photo-container {
             width: 100%;
             height: 350px;
             overflow: hidden;
+            position: relative;
         }
 
         .person-card img {
@@ -125,7 +217,7 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
-            transition: transform 0.4s ease;
+            transition: transform 0.45s ease;
         }
 
         .person-card:hover img {
@@ -135,30 +227,144 @@
         .person-card .info {
             padding: 20px;
             text-align: center; /* <-- Это добавленное свойство */
+            position: relative;
         }
 
         .person-card .name {
             font-size: 1.4rem;
             margin-bottom: 8px;
             color: var(--primary-color);
+            letter-spacing: 0.02em;
         }
 
         .person-card .name .surname {
             display: block;
             font-weight: 700;
-            font-family: 'Gotham Pro', sans-serif;
+            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
         .person-card .name .given-name {
             display: block;
             font-weight: 400;
-            font-family: 'Gotham Pro', sans-serif;
+            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
         .person-card .title-role {
             font-size: 1rem;
-            color: #555;
-            font-family: 'Gotham Pro', sans-serif;
+            color: rgba(51, 51, 51, 0.75);
+            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
+            line-height: 1.7;
+        }
+
+        .person-card::after {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border-radius: calc(var(--border-radius) - 12px);
+            border: 1px solid rgba(247, 183, 51, 0.22);
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+            pointer-events: none;
+        }
+
+        .person-card:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .people-grid .person-card:nth-child(1).is-visible { animation-delay: 0.05s; }
+        .people-grid .person-card:nth-child(2).is-visible { animation-delay: 0.1s; }
+        .people-grid .person-card:nth-child(3).is-visible { animation-delay: 0.15s; }
+        .people-grid .person-card:nth-child(4).is-visible { animation-delay: 0.2s; }
+        .people-grid .person-card:nth-child(5).is-visible { animation-delay: 0.25s; }
+        .people-grid .person-card:nth-child(6).is-visible { animation-delay: 0.3s; }
+        .people-grid .person-card:nth-child(7).is-visible { animation-delay: 0.35s; }
+        .people-grid .person-card:nth-child(8).is-visible { animation-delay: 0.4s; }
+
+        /* --- Animations & Motion Preferences --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cardReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 1ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 1ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .person-card {
+                opacity: 1;
+                transform: none;
+                filter: none;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 16px 24px;
+            }
+
+            header.is-scrolled {
+                padding: 10px 24px;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .hero {
+                padding: 32px 24px;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+            }
+
+            .person-card .photo-container {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .person-card .info {
+                padding: 18px 16px 24px;
+            }
+
+            .person-card::after {
+                inset: 14px;
+            }
         }
     </style>
 </head>
@@ -172,8 +378,14 @@
     </header>
 
     <main class="main-container">
-        <h1 class="title"> Список получателей брошюры Санкт-Петербургского горного университета </h1>
-        <div class="people-grid">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="title">Список получателей брошюры Санкт-Петербургского горного университета</h1>
+                <p class="subtitle">Здесь представлены ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики и партнерских проектах университета.</p>
+                <a class="cta-button" href="#recipients">Смотреть список</a>
+            </div>
+        </section>
+        <div id="recipients" class="people-grid">
             
             <div class="person-card">
                 <div class="photo-container">
@@ -298,20 +510,27 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const animatedElements = document.querySelectorAll('.person-card');
+            const header = document.querySelector('header');
 
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
                     }
                 });
             }, {
                 threshold: 0.1
             });
 
-            animatedElements.forEach(element => {
-                observer.observe(element);
-            });
+            animatedElements.forEach(element => observer.observe(element));
+
+            const toggleHeaderState = () => {
+                header.classList.toggle('is-scrolled', window.scrollY > 10);
+            };
+
+            toggleHeaderState();
+            window.addEventListener('scroll', toggleHeaderState, { passive: true });
         });
     </script>
 
