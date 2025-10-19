@@ -6,7 +6,23 @@
     <title>Санкт-Петербургский горный университет</title>
     <style>
         /* --- Font Import --- */
-        @import url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/css/gotham-pro.min.css');
+        @font-face {
+            font-family: 'Gotham Pro';
+            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gotham Pro';
+            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
 
         /* --- Global Styles & Variables --- */
         :root {
@@ -123,14 +139,26 @@
 
         .person-card .name {
             font-size: 1.4rem;
-            font-weight: 500;
             margin-bottom: 8px;
             color: var(--primary-color);
+        }
+
+        .person-card .name .surname {
+            display: block;
+            font-weight: 700;
+            font-family: 'Gotham Pro', sans-serif;
+        }
+
+        .person-card .name .given-name {
+            display: block;
+            font-weight: 400;
+            font-family: 'Gotham Pro', sans-serif;
         }
 
         .person-card .title-role {
             font-size: 1rem;
             color: #555;
+            font-family: 'Gotham Pro', sans-serif;
         }
     </style>
 </head>
@@ -152,7 +180,10 @@
                     <img src="https://minenergo.gov.ru/upload/iblock/3a2/TSivilyev_4-_glavnaya_1.png" alt="Фото Цивилева Сергея Евгеньевича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Цивилев Сергей Евгеньевич</h2>
+                    <h2 class="name">
+                        <span class="surname">Цивилев</span>
+                        <span class="given-name">Сергей Евгеньевич</span>
+                    </h2>
                     <p class="title-role">Министр энергетики Российской Федерации</p>
                 </div>
             </div>
@@ -162,7 +193,10 @@
                     <img src="https://cdnstatic.rg.ru/uploads/images/2023/04/26/ria_8419354hr_732.jpg" alt="Фото Новака Александра Валентиновича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Новак Александр Валентинович</h2>
+                    <h2 class="name">
+                        <span class="surname">Новак</span>
+                        <span class="given-name">Александр Валентинович</span>
+                    </h2>
                     <p class="title-role">Заместитель Председателя Правительства Российской Федерации</p>
                 </div>
             </div>
@@ -172,7 +206,10 @@
                     <img src="https://minenergo.gov.ru/upload/iblock/fc3/Grabchak_2.png" alt="Фото Грабчака Евгения Петровича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Грабчак Евгений Петрович</h2>
+                    <h2 class="name">
+                        <span class="surname">Грабчак</span>
+                        <span class="given-name">Евгений Петрович</span>
+                    </h2>
                     <p class="title-role">Заместитель Министра энергетики</p>
                 </div>
             </div>
@@ -182,7 +219,10 @@
                     <img src="https://minenergo.gov.ru/upload/iblock/76b/SHeremettsev_2.png" alt="Фото Шереметцева Эдуарда Михайловича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Шереметцев Эдуард Михайлович</h2>
+                    <h2 class="name">
+                        <span class="surname">Шереметцев</span>
+                        <span class="given-name">Эдуард Михайлович</span>
+                    </h2>
                     <p class="title-role">Заместитель Министра энергетики</p>
                 </div>
             </div>
@@ -192,7 +232,10 @@
                     <img src="https://rosseti-kuban.ru/media/images/2022/12/22/40673/%D0%A0%D0%AE%D0%9C%D0%98%D0%9D%20+.jpg" alt="Фото Рюмина Андрея Валерьевича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Рюмин Андрей Валерьевич</h2>
+                    <h2 class="name">
+                        <span class="surname">Рюмин</span>
+                        <span class="given-name">Андрей Валерьевич</span>
+                    </h2>
                     <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
                 </div>
             </div>
@@ -202,7 +245,10 @@
                     <img src="https://static8.tgcnt.ru/posts/_0/97/9757cd6105755b85dad3e6ceaf83a91c.jpg" alt="Фото Кулапина Алексея Ивановича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Кулапин Алексей Иванович</h2>
+                    <h2 class="name">
+                        <span class="surname">Кулапин</span>
+                        <span class="given-name">Алексей Иванович</span>
+                    </h2>
                     <p class="title-role">Генеральный директор Российского энергетического агентства (РЭА) Минэнерго России</p>
                 </div>
             </div>
@@ -212,7 +258,10 @@
                     <img src="https://iy.kommersant.ru/Issues.photo/TEMA/2021/180/KMO_120929_03645_1_t218_145312.jpg" alt="Фото Холкина Дмитрия Владимировича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Холкин Дмитрий Владимирович</h2>
+                    <h2 class="name">
+                        <span class="surname">Холкин</span>
+                        <span class="given-name">Дмитрий Владимирович</span>
+                    </h2>
                     <p class="title-role">Генеральный директор АНО «Центр «Энерджинет»</p>
                 </div>
             </div>
@@ -222,7 +271,10 @@
                     <img src="https://static.tildacdn.com/tild6130-3032-4939-b536-366131393236/c8581d90f6e1f39f942d.jpg" alt="Фото Жихарева Алексея Борисовича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Жихарев Алексей Борисович</h2>
+                    <h2 class="name">
+                        <span class="surname">Жихарев</span>
+                        <span class="given-name">Алексей Борисович</span>
+                    </h2>
                     <p class="title-role">Директор Ассоциации развития возобновляемой энергетики (АРВЭ)</p>
                 </div>
             </div>
@@ -232,7 +284,10 @@
                     <img src="https://yuresk.ru/upload/iblock/ed5/b1d0q86ybyo1ki9wd53x3xthb3bokcry/313c5140_7a3a_4dac_83e1_0afb2d6f1bdc.png" alt="Фото Пилениекса Дениса Викторовича">
                 </div>
                 <div class="info">
-                    <h2 class="name">Пилениекс Денис Викторович</h2>
+                    <h2 class="name">
+                        <span class="surname">Пилениекс</span>
+                        <span class="given-name">Денис Викторович</span>
+                    </h2>
                     <p class="title-role">Директор по развитию ЕЭС – руководитель дирекции АО «СО ЕЭС»</p>
                 </div>
             </div>
