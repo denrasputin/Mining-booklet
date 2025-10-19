@@ -6,7 +6,23 @@
     <title>Санкт-Петербургский горный университет</title>
     <style>
         /* --- Font Import --- */
-        @import url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/css/gotham-pro.min.css');
+        @font-face {
+            font-family: 'Gotham Pro';
+            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gotham Pro';
+            src: url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/npm/gotham-pro-font@1.0.0/fonts/GothamPro-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
 
         /* --- Global Styles & Variables --- */
         :root {
@@ -130,16 +146,19 @@
         .person-card .name .surname {
             display: block;
             font-weight: 700;
+            font-family: 'Gotham Pro', sans-serif;
         }
 
         .person-card .name .given-name {
             display: block;
             font-weight: 400;
+            font-family: 'Gotham Pro', sans-serif;
         }
 
         .person-card .title-role {
             font-size: 1rem;
             color: #555;
+            font-family: 'Gotham Pro', sans-serif;
         }
     </style>
 </head>
