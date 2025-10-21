@@ -84,13 +84,24 @@
         header .logo-container {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
         }
 
         header .logo {
             max-height: 60px;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
             animation: float 6s ease-in-out infinite;
+        }
+        
+        header .logo.logo-main {
+             max-height: 70px; /* Increased size for the first logo */
+        }
+        
+        header .header-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1rem; /* Decreased font size */
+            text-align: center;
         }
 
         header.is-scrolled {
@@ -128,51 +139,57 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 40px; /* Increased gap */
+        }
+        
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .hero-images {
+            display: flex;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+        
+        .hero-images a {
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden; /* Added to contain the image */
+        }
+
+        .hero-images a:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .hero-images img {
+            width: 150px; /* Set fixed width */
+            height: 212px; /* Set fixed height */
+            object-fit: cover; /* Ensures image covers the area without distortion */
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: block;
         }
 
         .title {
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            font-weight: 600;
+            font-size: clamp(1.6rem, 3.2vw, 2rem); /* Adjusted font size for more impact */
+            font-weight: 700; /* Made it bolder */
             color: var(--primary-color);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            line-height: 1.35;
         }
 
         .subtitle {
-            font-size: 1.05rem;
-            max-width: 720px;
-            margin: 0 auto 26px;
+            font-size: 1rem; /* Adjusted font size */
+            max-width: none;
+            margin: 0;
             color: rgba(51, 51, 51, 0.85);
-            line-height: 1.8;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            background: linear-gradient(135deg, var(--primary-color), #005599);
-            color: #fff;
-            border-radius: 999px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 15px 35px rgba(0, 51, 102, 0.28);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-        }
-
-        .cta-button::after {
-            content: "→";
-            font-size: 1.1em;
-            transition: transform var(--transition-speed) ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 22px 40px rgba(0, 51, 102, 0.33);
-        }
-
-        .cta-button:hover::after {
-            transform: translateX(4px);
+            line-height: 1.7;
         }
 
         /* --- Grid for People --- */
@@ -226,7 +243,7 @@
 
         .person-card .info {
             padding: 20px;
-            text-align: center; /* <-- Это добавленное свойство */
+            text-align: center;
             position: relative;
         }
 
@@ -240,19 +257,16 @@
         .person-card .name .surname {
             display: block;
             font-weight: 700;
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
         .person-card .name .given-name {
             display: block;
             font-weight: 400;
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
         }
 
         .person-card .title-role {
             font-size: 1rem;
             color: rgba(51, 51, 51, 0.75);
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
             line-height: 1.7;
         }
 
@@ -281,6 +295,39 @@
         .people-grid .person-card:nth-child(6).is-visible { animation-delay: 0.3s; }
         .people-grid .person-card:nth-child(7).is-visible { animation-delay: 0.35s; }
         .people-grid .person-card:nth-child(8).is-visible { animation-delay: 0.4s; }
+        
+        /* --- Footer Contacts --- */
+        .footer-contacts {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.07);
+        }
+        
+        .footer-contacts h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .footer-contacts p {
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-size: 1.05rem;
+        }
+        
+        .footer-contacts a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-contacts a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
 
         /* --- Animations & Motion Preferences --- */
         @keyframes float {
@@ -329,18 +376,31 @@
             header {
                 padding: 16px 24px;
             }
+            
+            .logo-container {
+                flex-direction: row;
+                gap: 15px;
+            }
+            
+            header .header-title {
+                display: none;
+            }
 
             header.is-scrolled {
                 padding: 10px 24px;
             }
 
-            .logo-container {
-                flex-direction: column;
-                gap: 18px;
-            }
-
             .hero {
                 padding: 32px 24px;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                text-align: center;
             }
 
             .subtitle {
@@ -353,11 +413,6 @@
         }
 
         @media (max-width: 480px) {
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-            }
-
             .person-card .info {
                 padding: 18px 16px 24px;
             }
@@ -372,17 +427,30 @@
 
     <header>
         <div class="logo-container">
-            <img src="https://digital.spmi.ru/images/header/only_logo.png" alt="Логотип Горного Университета 1" class="logo">
-            <img src="https://msk.1mf.ru/upload/iblock/372/k1ky3ldj0wc3q3wusd121t8i9687r71t/Горный%20университет,%20г.%20Санкт-Петербург.png" alt="Логотип Горного Университета 2" class="logo">
+            <img src="https://msk.1mf.ru/upload/iblock/372/k1ky3ldj0wc3q3wusd121t8i9687r71t/Горный%20университет,%20г.%20Санкт-Петербург.png" alt="Логотип Горного Университета 1" class="logo logo-main">
+            <div class="header-title">Санкт-Петербургский горный университет императрицы Екатерины II</div>
+            <img src="https://digital.spmi.ru/images/header/only_logo.png" alt="Логотип Горного Университета 2" class="logo">
         </div>
     </header>
 
     <main class="main-container">
         <section class="hero">
             <div class="hero-content">
-                <h1 class="title">Список получателей брошюры Санкт-Петербургского горного университета</h1>
-                <p class="subtitle">Здесь представлены ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики и партнерских проектах университета.</p>
-                <a class="cta-button" href="#recipients">Смотреть список</a>
+                <div class="hero-text">
+                    <h1 class="title" style="font-size: 1.5rem; line-height: 1.45;">
+                        Результаты апробации<br>
+                        Молодежного Глобального Прогноза Развития Энергетики на тему: "Развитие энергетического партнерства стран БРИКС"
+                    </h1>
+                    <p class="subtitle">С исследованием в форме брошюры Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики и партнерских проектах университета.</p>
+                </div>
+                <div class="hero-images">
+                    <a href="https://spmi.ru/?ysclid=mh0jfmzcev355595287" target="_blank" rel="noopener noreferrer">
+                        <img src="https://i.imgur.com/09ipfoo.png" alt="Обложка брошюры 1">
+                    </a>
+                    <a href="https://spmi.ru/?ysclid=mh0jfmzcev355595287" target="_blank" rel="noopener noreferrer">
+                        <img src="https://i.imgur.com/4sovc9O.jpeg" alt="Обложка брошюры 2">
+                    </a>
+                </div>
             </div>
         </section>
         <div id="recipients" class="people-grid">
@@ -503,8 +571,14 @@
                     <p class="title-role">Директор по развитию ЕЭС – руководитель дирекции АО «СО ЕЭС»</p>
                 </div>
             </div>
-            
         </div>
+        
+        <footer class="footer-contacts">
+            <h3>Контакты</h3>
+            <p><strong>Жуковский Юрий Леонидович:</strong> <a href="mailto:Zhukovskiy_Yul@pers.spmi.ru">Zhukovskiy_Yul@pers.spmi.ru</a></p>
+            <p><strong>Булдыско Александра Дмитриевна:</strong> <a href="mailto:Buldysko_AD@pers.spmi.ru">Buldysko_AD@pers.spmi.ru</a></p>
+        </footer>
+        
     </main>
 
     <script>
