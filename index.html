@@ -4,26 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Санкт-Петербургский горный университет</title>
+    <meta name="description" content="Результаты апробации Молодежного Глобального Прогноза Развития Энергетики: брошюры Санкт-Петербургского горного университета о партнерстве стран БРИКС и топливном потенциале регионов России.">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- Link preview in messengers and social networks -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Санкт-Петербургский горный университет">
+    <meta property="og:title" content="Молодежный Глобальный Прогноз Развития Энергетики — результаты апробации">
+    <meta property="og:description" content="С исследованиями Горного университета ознакомились руководители органов власти и компаний энергетической отрасли.">
+    <meta property="og:url" content="https://denrasputin.github.io/Mining-booklet/">
+    <meta property="og:image" content="https://denrasputin.github.io/Mining-booklet/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script>document.documentElement.classList.add('js');</script>
     <style>
-        /* --- Font Import --- */
+        /* --- Font Import: Montserrat (SIL OFL), stored in the repo --- */
         @font-face {
-            font-family: 'Gotham Pro';
-            src: local('Gotham Pro'), local('GothamPro'),
-                 url('https://fonts.cdnfonts.com/s/16534/GothamPro.woff2') format('woff2'),
-                 url('https://fonts.cdnfonts.com/s/16534/GothamPro.woff') format('woff');
-            font-weight: 400;
+            font-family: 'Montserrat';
+            src: url('fonts/montserrat-cyrillic.woff2') format('woff2');
+            font-weight: 400 700;
             font-style: normal;
             font-display: swap;
+            unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
-            src: local('Gotham Pro Bold'), local('GothamPro-Bold'),
-                 url('https://fonts.cdnfonts.com/s/16534/GothamPro-Bold.woff2') format('woff2'),
-                 url('https://fonts.cdnfonts.com/s/16534/GothamPro-Bold.woff') format('woff');
-            font-weight: 700;
+            font-family: 'Montserrat';
+            src: url('fonts/montserrat-latin.woff2') format('woff2');
+            font-weight: 400 700;
             font-style: normal;
             font-display: swap;
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
 
         /* --- Global Styles & Variables --- */
@@ -45,7 +60,7 @@
         }
 
         body {
-            font-family: 'Gotham Pro', 'GothamPro', sans-serif;
+            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #ffffff 0%, #eef4ff 40%, #f9fbff 100%);
             color: var(--text-color);
             line-height: 1.6;
@@ -151,28 +166,52 @@
         
         .hero-images {
             display: flex;
+            align-items: flex-start;
             gap: 15px;
             flex-shrink: 0;
         }
-        
+
         .hero-images a {
-            display: block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 12px;
-            overflow: hidden; /* Added to contain the image */
+            display: flex;
+            flex-direction: column;
+            width: 150px;
+            color: inherit;
+            text-decoration: none;
+            transition: transform 0.3s ease;
         }
 
         .hero-images a:hover {
             transform: translateY(-8px);
+        }
+
+        .hero-images a:hover img {
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-        
+
+        .cover-type {
+            margin-top: 10px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #b07a00;
+        }
+
+        .cover-title {
+            margin-top: 2px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--primary-color);
+        }
+
         .hero-images img {
             width: 150px; /* Set fixed width */
             height: 212px; /* Set fixed height */
             object-fit: cover; /* Ensures image covers the area without distortion */
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
             display: block;
         }
 
@@ -218,6 +257,85 @@
             line-height: 1.7;
         }
 
+        /* --- "More about the project" toggle --- */
+        .more {
+            margin-top: 18px;
+        }
+
+        .more summary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border: 1px solid rgba(0, 51, 102, 0.25);
+            border-radius: 999px;
+            color: var(--primary-color);
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+            transition: background var(--transition-speed) ease;
+        }
+
+        .more summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .more summary::after {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: translateY(-2px) rotate(45deg);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .more summary:hover {
+            background: rgba(0, 51, 102, 0.06);
+        }
+
+        .more[open] summary::after {
+            transform: translateY(2px) rotate(-135deg);
+        }
+
+        .more .more-hide,
+        .more[open] .more-show {
+            display: none;
+        }
+
+        .more[open] .more-hide {
+            display: inline;
+        }
+
+        .more-body {
+            margin-top: 16px;
+            text-align: left;
+            color: rgba(51, 51, 51, 0.85);
+            line-height: 1.7;
+        }
+
+        .facts {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .facts li {
+            padding: 12px 16px;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 12px;
+            background: rgba(0, 51, 102, 0.05);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .facts strong {
+            color: var(--primary-color);
+        }
+
         /* --- Grid for People --- */
         .people-grid {
             display: grid;
@@ -251,11 +369,15 @@
             box-shadow: var(--card-shadow);
             overflow: hidden;
             position: relative;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            will-change: transform, opacity;
+        }
+
+        /* Cards start hidden only when JavaScript runs and can reveal them */
+        .js .person-card {
             opacity: 0;
             transform: translateY(40px);
             filter: blur(6px);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            will-change: transform, opacity;
         }
 
         .person-card.is-visible {
@@ -353,7 +475,7 @@
             box-shadow: 0 -10px 30px rgba(0,0,0,0.07);
         }
         
-        .footer-contacts h3 {
+        .footer-contacts h2 {
             color: var(--primary-color);
             margin-bottom: 20px;
             font-size: 1.5rem;
@@ -408,7 +530,7 @@
                 scroll-behavior: auto !important;
             }
 
-            .person-card {
+            .js .person-card {
                 opacity: 1;
                 transform: none;
                 filter: none;
@@ -473,6 +595,7 @@
 
             .hero-images a {
                 flex: 1 1 0;
+                width: auto;
                 max-width: 150px;
             }
 
@@ -480,6 +603,14 @@
                 width: 100%;
                 height: auto;
                 aspect-ratio: 150 / 212;
+            }
+
+            .cover-type {
+                font-size: 0.6rem;
+            }
+
+            .cover-title {
+                font-size: 0.72rem;
             }
 
             .subtitle {
@@ -521,16 +652,33 @@
                         <li>«Изучение топливного потенциала регионов России и разработка рекомендаций для рационального использования местных видов топлива и организации эффективной структуры поставок энергоносителей»</li>
                     </ul>
                     <p class="subtitle">С исследованиями в форме брошюр Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики, топливном потенциале регионов России и партнерских проектах университета.</p>
+                    <details class="more">
+                        <summary><span class="more-show">Подробнее о проекте</span><span class="more-hide">Свернуть</span></summary>
+                        <div class="more-body">
+                            <p>Молодежный Глобальный Прогноз Развития Энергетики — конкурс для студентов и аспирантов вузов, который входит в Общероссийский план молодежных мероприятий, направленных на популяризацию топливно-энергетического комплекса.</p>
+                            <ul class="facts">
+                                <li><strong>2 темы</strong> исследований Горного университета изданы в виде брошюр</li>
+                                <li><strong>10 руководителей</strong> органов власти и компаний отрасли ознакомились с результатами</li>
+                                <li><strong>Победитель</strong> — команда WeWatt в категории «Студенты», Москва, 2025</li>
+                            </ul>
+                        </div>
+                    </details>
                 </div>
                 <div class="hero-images">
                     <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-1.jpg" alt="Обложка брошюры «Развитие энергетического партнерства на пространствах БРИКС, СНГ и ЕАЭС»">
+                        <img src="images/brochures/brochure-1.jpg" width="150" height="212" alt="Обложка брошюры «Развитие энергетического партнерства на пространствах БРИКС, СНГ и ЕАЭС»">
+                        <span class="cover-type">Брошюра</span>
+                        <span class="cover-title">Энергетическое партнерство БРИКС, СНГ и ЕАЭС</span>
                     </a>
                     <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-2.jpg" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
+                        <img src="images/brochures/brochure-2.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
+                        <span class="cover-type">Диплом</span>
+                        <span class="cover-title">Победитель в категории «Студенты», 2025</span>
                     </a>
                     <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-3.jpg" alt="Обложка брошюры «Изучение топливного потенциала регионов России»">
+                        <img src="images/brochures/brochure-3.jpg" width="150" height="212" alt="Обложка брошюры «Изучение топливного потенциала регионов России»">
+                        <span class="cover-type">Брошюра</span>
+                        <span class="cover-title">Топливный потенциал регионов России</span>
                     </a>
                 </div>
             </div>
@@ -669,7 +817,7 @@
         </div>
         
         <footer class="footer-contacts">
-            <h3>Контакты</h3>
+            <h2>Контакты</h2>
             <p><strong>Жуковский Юрий Леонидович:</strong> <a href="mailto:Zhukovskiy_Yul@pers.spmi.ru">Zhukovskiy_Yul@pers.spmi.ru</a></p>
             <p><strong>Булдыско Александра Дмитриевна:</strong> <a href="mailto:Buldysko_AD@pers.spmi.ru">Buldysko_AD@pers.spmi.ru</a></p>
         </footer>
@@ -681,18 +829,23 @@
             const animatedElements = document.querySelectorAll('.person-card');
             const header = document.querySelector('header');
 
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        obs.unobserve(entry.target);
-                    }
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1
                 });
-            }, {
-                threshold: 0.1
-            });
 
-            animatedElements.forEach(element => observer.observe(element));
+                animatedElements.forEach(element => observer.observe(element));
+            } else {
+                // Old browsers: show cards right away
+                animatedElements.forEach(element => element.classList.add('is-visible'));
+            }
 
             const toggleHeaderState = () => {
                 header.classList.toggle('is-scrolled', window.scrollY > 10);
