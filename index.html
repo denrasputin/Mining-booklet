@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Санкт-Петербургский горный университет</title>
-    <meta name="description" content="Результаты апробации Молодежного Глобального Прогноза Развития Энергетики: брошюры Санкт-Петербургского горного университета о партнерстве стран БРИКС и топливном потенциале регионов России.">
+    <meta name="description" content="Результаты апробации Молодежного глобального прогноза развития энергетики: брошюры Санкт-Петербургского горного университета о партнерстве стран БРИКС и топливном потенциале регионов России.">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- Russian text needs these two files first; the browser starts loading them right away -->
+    <link rel="preload" href="fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Link preview in messengers and social networks -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:site_name" content="Санкт-Петербургский горный университет">
-    <meta property="og:title" content="Молодежный Глобальный Прогноз Развития Энергетики — результаты апробации">
+    <meta property="og:title" content="Молодежный глобальный прогноз развития энергетики — результаты апробации">
     <meta property="og:description" content="С исследованиями Горного университета ознакомились руководители органов власти и компаний энергетической отрасли.">
     <meta property="og:url" content="https://denrasputin.github.io/Mining-booklet/">
     <meta property="og:image" content="https://denrasputin.github.io/Mining-booklet/images/og-image.jpg">
@@ -22,10 +26,10 @@
 
     <script>document.documentElement.classList.add('js');</script>
     <style>
-        /* --- Font Import: Montserrat (SIL OFL), stored in the repo --- */
+        /* --- Fonts: Geologica for headings, Golos Text for text (both SIL OFL, stored in the repo) --- */
         @font-face {
-            font-family: 'Montserrat';
-            src: url('fonts/montserrat-cyrillic.woff2') format('woff2');
+            font-family: 'Geologica';
+            src: url('fonts/geologica-cyrillic.woff2') format('woff2');
             font-weight: 400 700;
             font-style: normal;
             font-display: swap;
@@ -33,8 +37,26 @@
         }
 
         @font-face {
-            font-family: 'Montserrat';
-            src: url('fonts/montserrat-latin.woff2') format('woff2');
+            font-family: 'Geologica';
+            src: url('fonts/geologica-latin.woff2') format('woff2');
+            font-weight: 400 700;
+            font-style: normal;
+            font-display: swap;
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        @font-face {
+            font-family: 'Golos Text';
+            src: url('fonts/golos-text-cyrillic.woff2') format('woff2');
+            font-weight: 400 700;
+            font-style: normal;
+            font-display: swap;
+            unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        @font-face {
+            font-family: 'Golos Text';
+            src: url('fonts/golos-text-latin.woff2') format('woff2');
             font-weight: 400 700;
             font-style: normal;
             font-display: swap;
@@ -46,11 +68,17 @@
             --primary-color: #003366; /* Deep Blue */
             --secondary-color: #f4f4f4; /* Light Gray */
             --accent-color: #f7b733;
+            --label-color: #b07a00; /* small gold labels */
             --text-color: #333;
             --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
             --border-radius: 18px;
             --glass-bg: rgba(255, 255, 255, 0.8);
             --transition-speed: 0.3s;
+            --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+            --font-heading: 'Geologica', 'Golos Text', 'Helvetica Neue', Arial, sans-serif;
+            --font-text: 'Golos Text', 'Helvetica Neue', Arial, sans-serif;
+            --header-h: 106px; /* the page starts below the full header */
+            --header-h-compact: 64px;
         }
 
         * {
@@ -60,13 +88,14 @@
         }
 
         body {
-            font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            font-family: var(--font-text);
             background: linear-gradient(135deg, #ffffff 0%, #eef4ff 40%, #f9fbff 100%);
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+            padding-top: var(--header-h);
         }
 
         body::before {
@@ -81,19 +110,24 @@
         }
 
         /* --- Header & Logos --- */
+        /* Fixed, so it can get lower on scroll without moving the page under the finger */
         header {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 18px 40px;
+            height: var(--header-h);
+            padding: 0 40px;
             background: var(--glass-bg);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-            transition: padding var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            transition: height 0.35s var(--ease-out), box-shadow var(--transition-speed) ease;
         }
 
         header .logo-container {
@@ -103,25 +137,40 @@
         }
 
         header .logo {
-            max-height: 60px;
+            display: block;
+            width: auto;
+            height: 60px;
             filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
-            animation: float 6s ease-in-out infinite;
+            transition: height 0.35s var(--ease-out);
         }
-        
+
         header .logo.logo-main {
-             max-height: 70px; /* Increased size for the first logo */
+            height: 70px;
         }
-        
+
         header .header-title {
+            font-family: var(--font-heading);
             color: var(--primary-color);
             font-weight: 600;
-            font-size: 1rem; /* Decreased font size */
+            font-size: 1rem;
             text-align: center;
         }
 
+        header .header-title .short {
+            display: none;
+        }
+
         header.is-scrolled {
-            padding: 12px 40px;
+            height: var(--header-h-compact);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        header.is-scrolled .logo {
+            height: 40px;
+        }
+
+        header.is-scrolled .logo.logo-main {
+            height: 46px;
         }
 
         /* --- Main Content --- */
@@ -139,7 +188,6 @@
             box-shadow: 0 25px 60px rgba(0, 22, 66, 0.12);
             position: relative;
             overflow: hidden;
-            animation: fadeInDown 0.8s ease-out both;
         }
 
         .hero::before {
@@ -163,28 +211,56 @@
             flex: 1;
             text-align: left;
         }
-        
+
+        /* The first screen assembles itself: label, title, text, button and covers rise in turn */
+        .hero-text > *,
         .hero-images {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+            animation: rise 0.6s var(--ease-out) backwards;
+        }
+
+        .hero-text > :nth-child(2) { animation-delay: 0.08s; }
+        .hero-text > :nth-child(3) { animation-delay: 0.16s; }
+        .hero-text > :nth-child(4) { animation-delay: 0.24s; }
+        .hero-text > :nth-child(5) { animation-delay: 0.32s; }
+        .hero-images { animation-delay: 0.2s; }
+
+        /* --- Covers: a row without JavaScript, a carousel with it --- */
+        .hero-images {
             flex-shrink: 0;
         }
 
-        .hero-images a {
+        .cover picture {
+            display: block;
+            width: 100%;
+        }
+
+        .covers-stage {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .cover a {
             display: flex;
             flex-direction: column;
             width: 150px;
             color: inherit;
             text-decoration: none;
-            transition: transform 0.3s ease;
         }
 
-        .hero-images a:hover {
+        .cover img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 150 / 212;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+        }
+
+        .cover a:hover img {
             transform: translateY(-8px);
-        }
-
-        .hero-images a:hover img {
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
@@ -194,33 +270,225 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #b07a00;
+            color: var(--label-color);
         }
 
         .cover-title {
             margin-top: 2px;
+            font-family: var(--font-heading);
             font-size: 0.8rem;
             font-weight: 600;
             line-height: 1.35;
             color: var(--primary-color);
         }
 
-        .hero-images img {
-            width: 150px; /* Set fixed width */
-            height: 212px; /* Set fixed height */
-            object-fit: cover; /* Ensures image covers the area without distortion */
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
+        /* Carousel: JavaScript sets --pos (place relative to the front cover),
+           --dist (0 in front, 1 at the side), --tilt and --alpha on every cover */
+        .js .hero-images {
+            --cover-w: 200px;
+            --cover-shift: 0.62; /* step between covers, in cover widths */
+            width: calc(var(--cover-w) * 2.1);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .js .covers-stage {
             display: block;
+            position: relative;
+            height: calc(var(--cover-w) * 1.414 + 92px); /* front cover + its caption */
+            perspective: 1200px;
+            touch-action: pan-y; /* horizontal swipes turn the carousel, vertical ones scroll the page */
+            cursor: grab;
+        }
+
+        .js .hero-images.is-dragging .covers-stage {
+            cursor: grabbing;
+        }
+
+        .js .cover {
+            --dist: 1;
+            --alpha: 0;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: var(--cover-w);
+            max-width: none;
+            margin-left: calc(var(--cover-w) / -2);
+            transform-origin: 50% calc(var(--cover-w) * 0.707);
+            transform: translateX(calc(var(--pos, 0) * var(--cover-shift) * var(--cover-w)))
+                       scale(calc(1 - var(--dist) * 0.24))
+                       rotateY(calc(var(--tilt, 0) * -14deg));
+            opacity: var(--alpha);
+            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.7s ease;
+        }
+
+        .js .cover.is-active {
+            --dist: 0;
+            --alpha: 1;
+            z-index: 3;
+        }
+
+        .js .hero-images.is-dragging .cover {
+            transition: none;
+        }
+
+        .js .cover a {
+            width: 100%;
+            align-items: center;
+            text-align: center;
+            hyphens: manual;
+        }
+
+        .js .cover img {
+            aspect-ratio: 1 / 1.414;
+        }
+
+        .js .cover:not(.is-active) a:hover img {
+            transform: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Only the front cover shows its caption */
+        .js .cover-type,
+        .js .cover-title {
+            opacity: calc(1 - var(--dist) * 3);
+            transition: opacity 0.4s ease;
+        }
+
+        .js .cover-type {
+            margin-top: 14px;
+            font-size: 0.7rem;
+        }
+
+        .js .cover-title {
+            width: min(260px, 80vw); /* wider than the cover: side captions are hidden anyway */
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+
+        .covers-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .covers-arrow {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 1px solid rgba(0, 51, 102, 0.25);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.75);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: background var(--transition-speed) ease, transform 0.15s ease;
+        }
+
+        .covers-arrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: translateX(-2px) rotate(-45deg);
+        }
+
+        .covers-arrow[data-step="-1"]::before {
+            transform: translateX(2px) rotate(135deg);
+        }
+
+        .covers-arrow:hover {
+            background: #fff;
+        }
+
+        .covers-arrow:active {
+            transform: scale(0.92);
+        }
+
+        .covers-dots {
+            display: flex;
+            align-items: center;
+        }
+
+        .covers-dot {
+            padding: 12px 4px; /* a comfortable tap area around a small dot */
+            border: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        .covers-dot span {
+            display: block;
+            position: relative;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(0, 51, 102, 0.2);
+            overflow: hidden;
+            transition: width 0.4s ease, background var(--transition-speed) ease;
+        }
+
+        .covers-dot:hover span {
+            background: rgba(0, 51, 102, 0.35);
+        }
+
+        .covers-dot.is-active span {
+            width: 32px;
+        }
+
+        /* The bar fills up until the next cover; the end of the fill switches it */
+        .covers-dot span::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: left center;
+        }
+
+        .covers-dot.is-active span::after {
+            animation: coverProgress var(--autoplay-ms, 3000ms) linear forwards;
+        }
+
+        .hero-images.is-paused .covers-dot.is-active span::after {
+            animation-play-state: paused;
+        }
+
+        .cover a:focus-visible,
+        .covers-arrow:focus-visible,
+        .covers-dot:focus-visible span {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
+        }
+
+        .covers-dot:focus-visible {
+            outline: none;
+        }
+
+        .eyebrow {
+            margin-bottom: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--label-color);
         }
 
         .title {
-            font-size: clamp(1.6rem, 3.2vw, 2rem); /* Adjusted font size for more impact */
-            font-weight: 700; /* Made it bolder */
+            font-family: var(--font-heading);
+            font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+            font-weight: 650;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
             color: var(--primary-color);
-            margin-bottom: 20px;
-            line-height: 1.35;
+            margin-bottom: 22px;
+            text-wrap: balance; /* lines of similar length, no lonely word at the end */
         }
 
         .topics {
@@ -250,11 +518,12 @@
         }
 
         .subtitle {
-            font-size: 1rem; /* Adjusted font size */
+            font-size: 1rem;
             max-width: none;
             margin: 0;
             color: rgba(51, 51, 51, 0.85);
             line-height: 1.7;
+            text-wrap: pretty;
         }
 
         /* --- "More about the project" toggle --- */
@@ -310,10 +579,14 @@
         }
 
         .more-body {
-            margin-top: 16px;
+            overflow: hidden; /* lets the block open and close smoothly */
             text-align: left;
             color: rgba(51, 51, 51, 0.85);
             line-height: 1.7;
+        }
+
+        .more-body > :first-child {
+            margin-top: 16px;
         }
 
         .facts {
@@ -336,7 +609,27 @@
             color: var(--primary-color);
         }
 
-        /* --- Grid for People --- */
+        /* --- People: heading and grid --- */
+        .recipients-head {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.45rem, 3vw, 1.9rem);
+            font-weight: 650;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+            color: var(--primary-color);
+            text-wrap: balance;
+        }
+
+        .section-subtitle {
+            margin-top: 6px;
+            color: rgba(51, 51, 51, 0.75);
+        }
+
         .people-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -354,11 +647,11 @@
             }
         }
 
-        /* One column on phones: keep cards narrow so photos aren't cut into strips */
+        /* Two columns on phones: the page gets about half as long */
         @media (max-width: 699px) {
             .people-grid {
-                grid-template-columns: minmax(0, 420px);
-                justify-content: center;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
             }
         }
 
@@ -369,24 +662,32 @@
             box-shadow: var(--card-shadow);
             overflow: hidden;
             position: relative;
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            will-change: transform, opacity;
+            transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease;
         }
 
-        /* Cards start hidden only when JavaScript runs and can reveal them */
+        /* Cards start hidden only when JavaScript runs and can reveal them.
+           The reveal moves them with "translate", so hover is free to use "transform" */
         .js .person-card {
             opacity: 0;
-            transform: translateY(40px);
-            filter: blur(6px);
+            translate: 0 14px;
         }
 
-        .person-card.is-visible {
-            animation: cardReveal 0.75s ease-out forwards;
+        .js .person-card.is-visible {
+            opacity: 1;
+            translate: none;
+            animation: rise 0.55s var(--ease-out) backwards;
         }
 
-        .person-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 28px 45px rgba(0, 0, 0, 0.16);
+        /* Only on devices with a mouse: on a phone a tap would leave the card lifted */
+        @media (hover: hover) {
+            .person-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 16px 32px rgba(0, 22, 66, 0.13);
+            }
+
+            .person-card:hover img {
+                transform: scale(1.03);
+            }
         }
 
         .person-card .photo-container {
@@ -394,18 +695,28 @@
             aspect-ratio: 1 / 1; /* Same framing at any card width */
             overflow: hidden;
             position: relative;
+            background: linear-gradient(165deg, #e4ecf6, #c9d8eb); /* soft stand-in while the photo loads */
+        }
+
+        .person-card picture {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
 
         .person-card img {
+            display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top;
-            transition: transform 0.45s ease;
+            transition: transform 0.6s var(--ease-out), opacity 0.6s ease, scale 0.8s var(--ease-out);
         }
 
-        .person-card:hover img {
-            transform: scale(1.05);
+        /* A photo that is still loading stays hidden over the stand-in, then fades in */
+        .person-card img.is-loading {
+            opacity: 0;
+            scale: 1.04;
         }
 
         .person-card .info {
@@ -415,56 +726,32 @@
         }
 
         .person-card .name {
-            font-size: 1.4rem;
+            font-family: var(--font-heading);
             margin-bottom: 8px;
             color: var(--primary-color);
-            letter-spacing: 0.02em;
         }
 
         .person-card .name .surname {
             display: block;
-            font-weight: 700;
+            font-size: 1.35rem;
+            font-weight: 650;
+            line-height: 1.25;
         }
 
         .person-card .name .given-name {
             display: block;
+            font-family: var(--font-text);
+            font-size: 1.05rem;
             font-weight: 400;
+            line-height: 1.4;
         }
 
         .person-card .title-role {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: rgba(51, 51, 51, 0.75);
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
-        .person-card::after {
-            content: "";
-            position: absolute;
-            inset: 18px;
-            border-radius: calc(var(--border-radius) - 12px);
-            border: 1px solid rgba(247, 183, 51, 0.22);
-            opacity: 0;
-            transform: scale(0.98);
-            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
-            pointer-events: none;
-        }
-
-        .person-card:hover::after {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .people-grid .person-card:nth-child(1).is-visible { animation-delay: 0.05s; }
-        .people-grid .person-card:nth-child(2).is-visible { animation-delay: 0.1s; }
-        .people-grid .person-card:nth-child(3).is-visible { animation-delay: 0.15s; }
-        .people-grid .person-card:nth-child(4).is-visible { animation-delay: 0.2s; }
-        .people-grid .person-card:nth-child(5).is-visible { animation-delay: 0.25s; }
-        .people-grid .person-card:nth-child(6).is-visible { animation-delay: 0.3s; }
-        .people-grid .person-card:nth-child(7).is-visible { animation-delay: 0.35s; }
-        .people-grid .person-card:nth-child(8).is-visible { animation-delay: 0.4s; }
-        .people-grid .person-card:nth-child(9).is-visible { animation-delay: 0.45s; }
-        .people-grid .person-card:nth-child(10).is-visible { animation-delay: 0.5s; }
-        
         /* --- Footer Contacts --- */
         .footer-contacts {
             text-align: center;
@@ -476,6 +763,8 @@
         }
         
         .footer-contacts h2 {
+            font-family: var(--font-heading);
+            font-weight: 650;
             color: var(--primary-color);
             margin-bottom: 20px;
             font-size: 1.5rem;
@@ -499,27 +788,15 @@
         }
 
         /* --- Animations & Motion Preferences --- */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+        /* A soft rise: no blur, which is heavy for weak phones */
+        @keyframes rise {
+            from { opacity: 0; translate: 0 14px; }
+            to { opacity: 1; translate: none; }
         }
 
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes cardReveal {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-                filter: blur(6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
+        @keyframes coverProgress {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -532,8 +809,40 @@
 
             .js .person-card {
                 opacity: 1;
+                translate: none;
+            }
+
+            /* No autoplay: covers change only by hand */
+            .covers-dot.is-active span::after {
+                animation-name: none !important;
                 transform: none;
-                filter: none;
+            }
+        }
+
+        /* Printing and "Save as PDF": everything visible, the header back in its place */
+        @media print {
+            body {
+                padding-top: 0;
+            }
+
+            header {
+                position: static;
+            }
+
+            /* A card or the contacts never get cut by the edge of a sheet */
+            .person-card,
+            .footer-contacts {
+                break-inside: avoid;
+            }
+
+            .js .person-card,
+            .hero-text > *,
+            .hero-images,
+            .person-card img.is-loading {
+                opacity: 1 !important;
+                translate: none !important;
+                scale: none !important;
+                animation: none !important;
             }
         }
 
@@ -547,62 +856,86 @@
                 align-items: stretch;
             }
 
-            .hero-images {
+            .covers-stage {
                 justify-content: center;
+            }
+
+            .js .hero-images {
+                width: 100%;
             }
         }
 
         @media (max-width: 768px) {
-            header {
-                padding: 16px 24px;
+            :root {
+                --header-h: 80px;
+                --header-h-compact: 56px;
             }
-            
+
+            header {
+                padding: 0 20px;
+            }
+
             .logo-container {
                 flex-direction: row;
                 gap: 15px;
             }
-            
+
+            /* The full name does not fit: a short one stands between the logos */
             header .header-title {
+                font-size: 0.95rem;
+            }
+
+            header .header-title .full {
                 display: none;
             }
 
-            header.is-scrolled {
-                padding: 10px 24px;
+            header .header-title .short {
+                display: inline;
+            }
+
+            header .logo {
+                height: 46px;
+            }
+
+            header .logo.logo-main {
+                height: 54px;
+            }
+
+            header.is-scrolled .logo {
+                height: 34px;
+            }
+
+            header.is-scrolled .logo.logo-main {
+                height: 40px;
             }
 
             .hero {
                 padding: 32px 24px;
             }
-            
+
+            /* Long text reads easier from the left edge than centered */
             .hero-content {
                 flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero-text {
-                text-align: center;
-            }
-
-            .topics li {
-                text-align: left;
             }
 
             .hero-images {
                 width: 100%;
-                justify-content: center;
+            }
+
+            .covers-stage {
                 gap: 10px;
             }
 
-            .hero-images a {
+            /* Equal columns: min-width 0 keeps long words from widening one of them */
+            .cover {
                 flex: 1 1 0;
-                width: auto;
+                min-width: 0;
                 max-width: 150px;
             }
 
-            .hero-images img {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 150 / 212;
+            .cover a {
+                width: auto;
+                hyphens: auto;
             }
 
             .cover-type {
@@ -613,18 +946,46 @@
                 font-size: 0.72rem;
             }
 
+            .js .hero-images {
+                --cover-w: min(180px, 48vw);
+                --cover-shift: 0.56;
+            }
+
+            .js .cover-title {
+                font-size: 0.85rem;
+            }
+
             .subtitle {
                 font-size: 0.98rem;
             }
         }
 
-        @media (max-width: 480px) {
-            .person-card .info {
-                padding: 18px 16px 24px;
+        /* Compact cards for the two-column grid on phones */
+        @media (max-width: 699px) {
+            .recipients-head {
+                margin-bottom: 20px;
             }
 
-            .person-card::after {
-                inset: 14px;
+            .person-card .info {
+                padding: 12px 10px 16px;
+            }
+
+            .person-card .name {
+                margin-bottom: 6px;
+            }
+
+            .person-card .name .surname {
+                font-size: 1.05rem;
+            }
+
+            .person-card .name .given-name {
+                font-size: 0.85rem;
+            }
+
+            .person-card .title-role {
+                font-size: 0.8rem;
+                line-height: 1.45;
+                overflow-wrap: break-word;
             }
         }
     </style>
@@ -633,8 +994,11 @@
 
     <header>
         <div class="logo-container">
-            <img src="images/logos/gorny.png" alt="Логотип Горного Университета 1" class="logo logo-main">
-            <div class="header-title">Санкт-Петербургский горный университет императрицы Екатерины II</div>
+            <picture>
+                <source type="image/webp" srcset="images/logos/gorny.webp">
+                <img src="images/logos/gorny.png" width="116" height="160" alt="Логотип Горного Университета 1" class="logo logo-main">
+            </picture>
+            <div class="header-title"><span class="full">Санкт-Петербургский горный университет императрицы Екатерины II</span><span class="short">Горный университет</span></div>
             <img src="images/logos/spmi.png" alt="Логотип Горного Университета 2" class="logo">
         </div>
     </header>
@@ -643,179 +1007,232 @@
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="title" style="font-size: 1.5rem; line-height: 1.45;">
-                        Результаты апробации<br>
-                        Молодежного Глобального Прогноза Развития Энергетики
-                    </h1>
+                    <p class="eyebrow">Результаты апробации</p>
+                    <h1 class="title">Молодежный глобальный прогноз развития энергетики</h1>
                     <ul class="topics">
                         <li>«Развитие энергетического партнерства стран БРИКС»</li>
-                        <li>«Изучение топливного потенциала регионов России и разработка рекомендаций для рационального использования местных видов топлива и организации эффективной структуры поставок энергоносителей»</li>
+                        <li>«Изучение топливного потенциала регионов России и&nbsp;разработка рекомендаций для&nbsp;рационального использования местных видов топлива и&nbsp;организации эффективной структуры поставок энергоносителей»</li>
                     </ul>
-                    <p class="subtitle">С исследованиями в форме брошюр Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики, топливном потенциале регионов России и партнерских проектах университета.</p>
+                    <p class="subtitle">С&nbsp;исследованиями в&nbsp;форме брошюр Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и&nbsp;представители органов власти, получившие актуальные материалы о&nbsp;развитии энергетики, топливном потенциале регионов России и&nbsp;партнерских проектах университета.</p>
                     <details class="more">
-                        <summary><span class="more-show">Подробнее о проекте</span><span class="more-hide">Свернуть</span></summary>
+                        <summary><span class="more-show">Подробнее о&nbsp;проекте</span><span class="more-hide">Свернуть</span></summary>
                         <div class="more-body">
-                            <p>Молодежный Глобальный Прогноз Развития Энергетики — конкурс для студентов и аспирантов вузов, который входит в Общероссийский план молодежных мероприятий, направленных на популяризацию топливно-энергетического комплекса.</p>
+                            <p>Молодежный глобальный прогноз развития энергетики&nbsp;— конкурс для&nbsp;студентов и&nbsp;аспирантов вузов, который входит в&nbsp;Общероссийский план молодежных мероприятий, направленных на&nbsp;популяризацию топливно-энергетического комплекса.</p>
                             <ul class="facts">
-                                <li><strong>2 темы</strong> исследований Горного университета изданы в виде брошюр</li>
-                                <li><strong>10 руководителей</strong> органов власти и компаний отрасли ознакомились с результатами</li>
-                                <li><strong>Победитель</strong> — команда WeWatt в категории «Студенты», Москва, 2025</li>
+                                <li><strong>2&nbsp;темы</strong> исследований Горного университета изданы в&nbsp;виде брошюр</li>
+                                <li><strong>10&nbsp;руководителей</strong> органов власти и&nbsp;компаний отрасли ознакомились с&nbsp;результатами</li>
+                                <li><strong>Победитель</strong>&nbsp;— команда WeWatt в&nbsp;категории «Студенты», Москва, 2025</li>
                             </ul>
                         </div>
                     </details>
                 </div>
-                <div class="hero-images">
-                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-1.jpg" width="150" height="212" alt="Обложка брошюры «Развитие энергетического партнерства на пространствах БРИКС, СНГ и ЕАЭС»">
-                        <span class="cover-type">Брошюра</span>
-                        <span class="cover-title">Энергетическое партнерство БРИКС, СНГ и ЕАЭС</span>
-                    </a>
-                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-2.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
-                        <span class="cover-type">Диплом</span>
-                        <span class="cover-title">Победитель в категории «Студенты», 2025</span>
-                    </a>
-                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
-                        <img src="images/brochures/brochure-3.jpg" width="150" height="212" alt="Обложка брошюры «Изучение топливного потенциала регионов России»">
-                        <span class="cover-type">Брошюра</span>
-                        <span class="cover-title">Топливный потенциал регионов России</span>
-                    </a>
+                <!-- Covers carousel: to add a cover, copy one .cover block; the one with is-active is shown first -->
+                <section class="hero-images" aria-roledescription="карусель" aria-label="Брошюры и диплом">
+                    <div class="covers-stage">
+                        <div class="cover">
+                            <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                                <picture>
+                                    <source type="image/webp" srcset="images/brochures/brochure-1.webp">
+                                    <img src="images/brochures/brochure-1.jpg" width="150" height="212" alt="Обложка брошюры «Развитие энергетического партнерства на пространствах БРИКС, СНГ и ЕАЭС»">
+                                </picture>
+                                <span class="cover-type">Брошюра</span>
+                                <span class="cover-title">Энергетическое партнерство БРИКС, СНГ и&nbsp;ЕАЭС</span>
+                            </a>
+                        </div>
+                        <div class="cover is-active">
+                            <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                                <picture>
+                                    <source type="image/webp" srcset="images/brochures/brochure-2.webp">
+                                    <img src="images/brochures/brochure-2.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
+                                </picture>
+                                <span class="cover-type">Диплом</span>
+                                <span class="cover-title">Победитель в&nbsp;категории «Студенты», 2025</span>
+                            </a>
+                        </div>
+                        <div class="cover">
+                            <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                                <picture>
+                                    <source type="image/webp" srcset="images/brochures/brochure-3.webp">
+                                    <img src="images/brochures/brochure-3.jpg" width="150" height="212" alt="Обложка брошюры «Изучение топливного потенциала регионов России»">
+                                </picture>
+                                <span class="cover-type">Брошюра</span>
+                                <span class="cover-title">Топливный потенциал регионов России</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="recipients" aria-labelledby="recipients-title">
+            <div class="recipients-head">
+                <h2 id="recipients-title" class="section-title">С&nbsp;результатами ознакомились</h2>
+                <p class="section-subtitle">10&nbsp;руководителей органов власти и&nbsp;компаний отрасли</p>
+            </div>
+            <div id="recipients" class="people-grid">
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/novak-360.webp 360w, images/people/novak-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/novak.jpg" loading="lazy" decoding="async" alt="Фото Новака Александра Валентиновича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Новак</span>
+                            <span class="given-name">Александр Валентинович</span>
+                        </h3>
+                        <p class="title-role">Заместитель Председателя Правительства Российской Федерации</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/tsivilev-360.webp 360w, images/people/tsivilev-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/tsivilev.jpg" loading="lazy" decoding="async" alt="Фото Цивилева Сергея Евгеньевича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Цивилев</span>
+                            <span class="given-name">Сергей Евгеньевич</span>
+                        </h3>
+                        <p class="title-role">Министр энергетики Российской Федерации</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/ryumin-360.webp 360w, images/people/ryumin-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/ryumin.jpg" loading="lazy" decoding="async" alt="Фото Рюмина Андрея Валерьевича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Рюмин</span>
+                            <span class="given-name">Андрей Валерьевич</span>
+                        </h3>
+                        <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/grabchak-360.webp 360w, images/people/grabchak-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/grabchak.jpg" loading="lazy" decoding="async" alt="Фото Грабчака Евгения Петровича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Грабчак</span>
+                            <span class="given-name">Евгений Петрович</span>
+                        </h3>
+                        <p class="title-role">Заместитель Министра энергетики</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/sheremettsev-360.webp 360w, images/people/sheremettsev-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/sheremettsev.jpg" loading="lazy" decoding="async" alt="Фото Шереметцева Эдуарда Михайловича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Шереметцев</span>
+                            <span class="given-name">Эдуард Михайлович</span>
+                        </h3>
+                        <p class="title-role">Заместитель Министра энергетики</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/kuzmin-360.webp 360w, images/people/kuzmin-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/kuzmin.jpg" loading="lazy" decoding="async" alt="Фото Кузьмина Игоря Анатольевича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Кузьмин</span>
+                            <span class="given-name">Игорь Анатольевич</span>
+                        </h3>
+                        <p class="title-role">Генеральный директор ПАО «Россети Ленэнерго»</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/kulapin-360.webp 360w, images/people/kulapin-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/kulapin.jpg" loading="lazy" decoding="async" alt="Фото Кулапина Алексея Ивановича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Кулапин</span>
+                            <span class="given-name">Алексей Иванович</span>
+                        </h3>
+                        <p class="title-role">Генеральный директор Российского энергетического агентства (РЭА) Минэнерго России</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/kholkin-360.webp 360w, images/people/kholkin-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/kholkin.jpg" loading="lazy" decoding="async" alt="Фото Холкина Дмитрия Владимировича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Холкин</span>
+                            <span class="given-name">Дмитрий Владимирович</span>
+                        </h3>
+                        <p class="title-role">Генеральный директор АНО «Центр «Энерджинет»</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/zhikharev-360.webp 360w, images/people/zhikharev-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/zhikharev.jpg" loading="lazy" decoding="async" alt="Фото Жихарева Алексея Борисовича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Жихарев</span>
+                            <span class="given-name">Алексей Борисович</span>
+                        </h3>
+                        <p class="title-role">Директор Ассоциации развития возобновляемой энергетики (АРВЭ)</p>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <div class="photo-container">
+                        <picture>
+                            <source type="image/webp" srcset="images/people/pileniecks-360.webp 360w, images/people/pileniecks-720.webp 720w" sizes="(max-width: 699px) calc(50vw - 26px), (max-width: 1023px) 48vw, 370px">
+                            <img src="images/people/pileniecks.jpg" loading="lazy" decoding="async" alt="Фото Пилениекса Дениса Викторовича">
+                        </picture>
+                    </div>
+                    <div class="info">
+                        <h3 class="name">
+                            <span class="surname">Пилениекс</span>
+                            <span class="given-name">Денис Викторович</span>
+                        </h3>
+                        <p class="title-role">Директор по&nbsp;развитию ЕЭС&nbsp;– руководитель дирекции АО&nbsp;«СО&nbsp;ЕЭС»</p>
+                    </div>
                 </div>
             </div>
         </section>
-        <div id="recipients" class="people-grid">
-            
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/novak.jpg" loading="lazy" alt="Фото Новака Александра Валентиновича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Новак</span>
-                        <span class="given-name">Александр Валентинович</span>
-                    </h2>
-                    <p class="title-role">Заместитель Председателя Правительства Российской Федерации</p>
-                </div>
-            </div>
 
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/tsivilev.jpg" loading="lazy" alt="Фото Цивилева Сергея Евгеньевича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Цивилев</span>
-                        <span class="given-name">Сергей Евгеньевич</span>
-                    </h2>
-                    <p class="title-role">Министр энергетики Российской Федерации</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/ryumin.jpg" loading="lazy" alt="Фото Рюмина Андрея Валерьевича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Рюмин</span>
-                        <span class="given-name">Андрей Валерьевич</span>
-                    </h2>
-                    <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/grabchak.jpg" loading="lazy" alt="Фото Грабчака Евгения Петровича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Грабчак</span>
-                        <span class="given-name">Евгений Петрович</span>
-                    </h2>
-                    <p class="title-role">Заместитель Министра энергетики</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/sheremettsev.jpg" loading="lazy" alt="Фото Шереметцева Эдуарда Михайловича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Шереметцев</span>
-                        <span class="given-name">Эдуард Михайлович</span>
-                    </h2>
-                    <p class="title-role">Заместитель Министра энергетики</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/kuzmin.jpg" loading="lazy" alt="Фото Кузьмина Игоря Анатольевича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Кузьмин</span>
-                        <span class="given-name">Игорь Анатольевич</span>
-                    </h2>
-                    <p class="title-role">Генеральный директор ПАО «Россети Ленэнерго»</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/kulapin.jpg" loading="lazy" alt="Фото Кулапина Алексея Ивановича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Кулапин</span>
-                        <span class="given-name">Алексей Иванович</span>
-                    </h2>
-                    <p class="title-role">Генеральный директор Российского энергетического агентства (РЭА) Минэнерго России</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/kholkin.jpg" loading="lazy" alt="Фото Холкина Дмитрия Владимировича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Холкин</span>
-                        <span class="given-name">Дмитрий Владимирович</span>
-                    </h2>
-                    <p class="title-role">Генеральный директор АНО «Центр «Энерджинет»</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/zhikharev.jpg" loading="lazy" alt="Фото Жихарева Алексея Борисовича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Жихарев</span>
-                        <span class="given-name">Алексей Борисович</span>
-                    </h2>
-                    <p class="title-role">Директор Ассоциации развития возобновляемой энергетики (АРВЭ)</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="images/people/pileniecks.jpg" loading="lazy" alt="Фото Пилениекса Дениса Викторовича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Пилениекс</span>
-                        <span class="given-name">Денис Викторович</span>
-                    </h2>
-                    <p class="title-role">Директор по развитию ЕЭС – руководитель дирекции АО «СО ЕЭС»</p>
-                </div>
-            </div>
-        </div>
-        
         <footer class="footer-contacts">
             <h2>Контакты</h2>
             <p><strong>Жуковский Юрий Леонидович:</strong> <a href="mailto:Zhukovskiy_Yul@pers.spmi.ru">Zhukovskiy_Yul@pers.spmi.ru</a></p>
@@ -825,17 +1242,317 @@
     </main>
 
     <script>
+        // Covers carousel: turns by itself every 3 seconds and by swipe, arrows, dots or keyboard
+        const setupCoverCarousel = (root) => {
+            const stage = root.querySelector('.covers-stage');
+            const slides = [...root.querySelectorAll('.cover')];
+            const count = slides.length;
+
+            if (!stage || count < 2) {
+                return;
+            }
+
+            const AUTOPLAY_MS = 3000;
+            const AFTER_USER_MS = 6000; // after turning it by hand a person gets more time to look
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const pauseReasons = new Set();
+            let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
+            let drag = null;
+            let dragEndedAt = 0;
+
+            // Puts covers around the front one; shift is an unfinished swipe, in steps
+            const place = (shift = 0) => {
+                slides.forEach((slide, i) => {
+                    let offset = i - index;
+                    if (offset > count / 2) offset -= count;
+                    if (offset < -count / 2) offset += count;
+
+                    const pos = offset + shift;
+                    const away = Math.abs(pos);
+                    const previous = slide.dataset.offset === undefined ? offset : Number(slide.dataset.offset);
+                    // A cover that jumps to the other side goes round behind the rest
+                    const goesRound = Math.abs(offset - previous) > 1;
+
+                    slide.dataset.offset = offset;
+                    slide.style.setProperty('--pos', pos.toFixed(3));
+                    slide.style.setProperty('--dist', Math.min(away, 1).toFixed(3));
+                    slide.style.setProperty('--tilt', Math.max(-1, Math.min(1, pos)).toFixed(3));
+                    slide.style.setProperty('--alpha', (away <= 1 ? 1 - 0.35 * away : Math.max(0, 1.3 - 0.65 * away)).toFixed(3));
+                    slide.style.zIndex = goesRound ? 0 : Math.round(100 - Math.min(away, 3) * 30);
+                });
+            };
+
+            const update = () => {
+                slides.forEach((slide, i) => {
+                    const isFront = i === index;
+                    slide.classList.toggle('is-active', isFront);
+                    slide.setAttribute('aria-hidden', String(!isFront));
+                    slide.querySelectorAll('a').forEach(link => { link.tabIndex = isFront ? 0 : -1; });
+                    dots[i].classList.toggle('is-active', isFront);
+                    dots[i].setAttribute('aria-current', String(isFront));
+                });
+            };
+
+            const goTo = (target, byUser) => {
+                const focusInside = stage.contains(document.activeElement);
+                index = ((target % count) + count) % count;
+                root.style.setProperty('--autoplay-ms', `${byUser ? AFTER_USER_MS : AUTOPLAY_MS}ms`);
+                update();
+                place();
+
+                if (focusInside) {
+                    const link = slides[index].querySelector('a');
+                    if (link) link.focus({ preventScroll: true });
+                }
+            };
+
+            const setPaused = (reason, paused) => {
+                if (paused) {
+                    pauseReasons.add(reason);
+                } else {
+                    pauseReasons.delete(reason);
+                }
+                root.classList.toggle('is-paused', pauseReasons.size > 0);
+                // Screen readers announce a new cover only when it is not turning by itself
+                stage.setAttribute('aria-live', pauseReasons.size > 0 ? 'polite' : 'off');
+            };
+
+            // Controls are created here, so without JavaScript the page has no dead buttons
+            const nav = document.createElement('div');
+            nav.className = 'covers-nav';
+
+            const dotsBox = document.createElement('div');
+            dotsBox.className = 'covers-dots';
+
+            const dots = slides.map((slide, i) => {
+                const label = [...slide.querySelectorAll('.cover-type, .cover-title')]
+                    .map(el => el.textContent.trim())
+                    .join(': ');
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'covers-dot';
+                dot.setAttribute('aria-label', label || `Обложка ${i + 1}`);
+                dot.append(document.createElement('span'));
+                dot.addEventListener('click', () => goTo(i, true));
+                dotsBox.append(dot);
+                return dot;
+            });
+
+            const makeArrow = (step, label) => {
+                const arrow = document.createElement('button');
+                arrow.type = 'button';
+                arrow.className = 'covers-arrow';
+                arrow.dataset.step = step;
+                arrow.setAttribute('aria-label', label);
+                arrow.addEventListener('click', () => goTo(index + step, true));
+                return arrow;
+            };
+
+            nav.append(makeArrow(-1, 'Предыдущая обложка'), dotsBox, makeArrow(1, 'Следующая обложка'));
+            root.append(nav);
+
+            slides.forEach((slide, i) => {
+                slide.setAttribute('role', 'group');
+                slide.setAttribute('aria-roledescription', 'слайд');
+                slide.setAttribute('aria-label', `${i + 1} из ${count}`);
+                slide.querySelectorAll('a, img').forEach(el => { el.draggable = false; });
+            });
+
+            // Autoplay: the fill of the active dot is the timer, its end brings the next cover
+            dotsBox.addEventListener('animationend', (event) => {
+                if (event.animationName === 'coverProgress' && !reduceMotion.matches) {
+                    goTo(index + 1, false);
+                }
+            });
+
+            root.addEventListener('pointerenter', (event) => {
+                if (event.pointerType === 'mouse') setPaused('hover', true);
+            });
+
+            root.addEventListener('pointerleave', (event) => {
+                if (event.pointerType === 'mouse') setPaused('hover', false);
+            });
+
+            const isKeyboardFocus = (element) => {
+                try {
+                    return element.matches(':focus-visible');
+                } catch (error) {
+                    return true; // browsers without :focus-visible
+                }
+            };
+
+            root.addEventListener('focusin', (event) => {
+                if (isKeyboardFocus(event.target)) setPaused('focus', true);
+            });
+
+            root.addEventListener('focusout', (event) => {
+                if (!root.contains(event.relatedTarget)) setPaused('focus', false);
+            });
+
+            root.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    goTo(index + (event.key === 'ArrowRight' ? 1 : -1), true);
+                }
+            });
+
+            // No turning while nobody can see it
+            document.addEventListener('visibilitychange', () => setPaused('hidden', document.hidden));
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver((entries) => {
+                    setPaused('offscreen', !entries[entries.length - 1].isIntersecting);
+                }).observe(root);
+            }
+
+            stage.addEventListener('click', (event) => {
+                // A swipe ends with a click, and it must not open the link
+                if (performance.now() - dragEndedAt < 400) {
+                    event.preventDefault();
+                    return;
+                }
+
+                // A side cover comes to the front instead of opening the link
+                const slide = event.target.closest('.cover');
+                if (slide && !slide.classList.contains('is-active')) {
+                    event.preventDefault();
+                    goTo(slides.indexOf(slide), true);
+                }
+            });
+
+            stage.addEventListener('pointerdown', (event) => {
+                if (event.pointerType === 'mouse' && event.button !== 0) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, dx: 0, step: 0 };
+            });
+
+            stage.addEventListener('pointermove', (event) => {
+                if (!drag || event.pointerId !== drag.id) return;
+
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+
+                if (!drag.step) {
+                    if (Math.max(Math.abs(dx), Math.abs(dy)) < 6) return; // still a tap
+                    if (Math.abs(dy) > Math.abs(dx)) {
+                        drag = null; // a vertical move scrolls the page
+                        return;
+                    }
+
+                    const ratio = parseFloat(getComputedStyle(root).getPropertyValue('--cover-shift')) || 0.6;
+                    drag.step = slides[index].offsetWidth * ratio; // px between neighbouring covers
+                    try {
+                        stage.setPointerCapture(event.pointerId);
+                    } catch (error) {
+                        // the pointer is already gone; the swipe still works without capture
+                    }
+                    root.classList.add('is-dragging');
+                    setPaused('drag', true);
+                }
+
+                drag.dx = dx;
+                place(Math.max(-1, Math.min(1, dx / drag.step)));
+            });
+
+            const endDrag = (event) => {
+                if (!drag || event.pointerId !== drag.id) return;
+
+                if (drag.step) {
+                    // One swipe turns one cover: with three covers two steps would look like a step back
+                    const shift = drag.dx / drag.step;
+
+                    root.classList.remove('is-dragging');
+                    setPaused('drag', false);
+                    dragEndedAt = performance.now();
+
+                    if (Math.abs(shift) >= 0.15) {
+                        goTo(index - Math.sign(shift), true);
+                    } else {
+                        place();
+                    }
+                }
+
+                drag = null;
+            };
+
+            stage.addEventListener('pointerup', endDrag);
+            stage.addEventListener('pointercancel', endDrag);
+
+            update();
+            void stage.offsetWidth; // render the stacked start first, so the covers fan out smoothly
+            place();
+        };
+
+        // "More about the project" opens and closes smoothly instead of jumping
+        const setupSmoothDetails = (details) => {
+            const summary = details.querySelector('summary');
+            const body = details.querySelector('.more-body');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let running = null;
+
+            if (!summary || !body || !body.animate) {
+                return;
+            }
+
+            summary.addEventListener('click', (event) => {
+                if (reduceMotion.matches) return;
+                event.preventDefault();
+                if (running) running.cancel();
+
+                if (details.open) {
+                    running = body.animate(
+                        [{ height: `${body.offsetHeight}px`, opacity: 1 }, { height: '0px', opacity: 0 }],
+                        { duration: 280, easing: 'ease' }
+                    );
+                    running.onfinish = () => {
+                        details.open = false;
+                        running = null;
+                    };
+                } else {
+                    details.open = true;
+                    running = body.animate(
+                        [{ height: '0px', opacity: 0 }, { height: `${body.offsetHeight}px`, opacity: 1 }],
+                        { duration: 340, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' }
+                    );
+                    running.onfinish = () => {
+                        running = null;
+                    };
+                }
+            });
+        };
+
+        // A photo that is not loaded yet fades in when it arrives instead of popping up
+        const fadeInWhenLoaded = (img) => {
+            if (img.complete) {
+                return; // already there (or broken): nothing to wait for
+            }
+
+            const show = () => img.classList.remove('is-loading');
+            img.addEventListener('load', show, { once: true });
+            img.addEventListener('error', show, { once: true });
+            img.classList.add('is-loading');
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.hero-images').forEach(setupCoverCarousel);
+            document.querySelectorAll('details.more').forEach(setupSmoothDetails);
+            document.querySelectorAll('.person-card img').forEach(fadeInWhenLoaded);
+
             const animatedElements = document.querySelectorAll('.person-card');
             const header = document.querySelector('header');
 
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            obs.unobserve(entry.target);
-                        }
+                    // Cards that come into view together rise one after another
+                    entries.filter(entry => entry.isIntersecting).forEach((entry, i) => {
+                        entry.target.style.animationDelay = `${i * 70}ms`;
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    });
+
+                    // Cards already above the screen (a quick jump down, a reload mid-page) just appear
+                    entries.filter(entry => !entry.isIntersecting && entry.boundingClientRect.bottom < 0).forEach(entry => {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
                     });
                 }, {
                     threshold: 0.1
