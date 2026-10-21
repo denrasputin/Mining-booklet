@@ -23,6 +23,11 @@ ROOT = Path(__file__).resolve().parent.parent
 IMAGES = ROOT / 'images'
 QUALITY = 78
 
+# Photos where the person is too small in the top square: (left, top, side) of a closer square
+CLOSE_UPS = {
+    'kuzmin': (80, 60, 470),
+}
+
 
 def open_image(path, mode):
     # Photos from phones may be stored sideways with a rotation flag
@@ -37,9 +42,12 @@ def save_webp(image, path, quality=QUALITY, **options):
 def people():
     for source in sorted((IMAGES / 'people').glob('*.jpg')):
         photo = open_image(source, 'RGB')
-        side = min(photo.size)
-        left = (photo.width - side) // 2
-        square = photo.crop((left, 0, left + side, side))  # the card shows the top of the photo
+        if source.stem in CLOSE_UPS:
+            left, top, side = CLOSE_UPS[source.stem]
+        else:
+            side = min(photo.size)
+            left, top = (photo.width - side) // 2, 0  # the card shows the top of the photo
+        square = photo.crop((left, top, left + side, top + side))
         for size in (360, 720):
             version = square.resize((size, size), Image.LANCZOS) if side > size else square
             save_webp(version, source.with_name(f'{source.stem}-{size}.webp'))
