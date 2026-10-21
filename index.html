@@ -184,6 +184,32 @@
             line-height: 1.35;
         }
 
+        .topics {
+            list-style: none;
+            margin: -6px 0 18px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .topics li {
+            position: relative;
+            padding-left: 18px;
+            color: var(--primary-color);
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .topics li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-color);
+        }
+
         .subtitle {
             font-size: 1rem; /* Adjusted font size */
             max-width: none;
@@ -295,6 +321,8 @@
         .people-grid .person-card:nth-child(6).is-visible { animation-delay: 0.3s; }
         .people-grid .person-card:nth-child(7).is-visible { animation-delay: 0.35s; }
         .people-grid .person-card:nth-child(8).is-visible { animation-delay: 0.4s; }
+        .people-grid .person-card:nth-child(9).is-visible { animation-delay: 0.45s; }
+        .people-grid .person-card:nth-child(10).is-visible { animation-delay: 0.5s; }
         
         /* --- Footer Contacts --- */
         .footer-contacts {
@@ -372,6 +400,17 @@
             scroll-behavior: smooth;
         }
 
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-images {
+                justify-content: center;
+            }
+        }
+
         @media (max-width: 768px) {
             header {
                 padding: 16px 24px;
@@ -403,6 +442,27 @@
                 text-align: center;
             }
 
+            .topics li {
+                text-align: left;
+            }
+
+            .hero-images {
+                width: 100%;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .hero-images a {
+                flex: 1 1 0;
+                max-width: 150px;
+            }
+
+            .hero-images img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 150 / 212;
+            }
+
             .subtitle {
                 font-size: 0.98rem;
             }
@@ -427,9 +487,9 @@
 
     <header>
         <div class="logo-container">
-            <img src="https://msk.1mf.ru/upload/iblock/372/k1ky3ldj0wc3q3wusd121t8i9687r71t/Горный%20университет,%20г.%20Санкт-Петербург.png" alt="Логотип Горного Университета 1" class="logo logo-main">
+            <img src="images/logos/gorny.png" alt="Логотип Горного Университета 1" class="logo logo-main">
             <div class="header-title">Санкт-Петербургский горный университет императрицы Екатерины II</div>
-            <img src="https://digital.spmi.ru/images/header/only_logo.png" alt="Логотип Горного Университета 2" class="logo">
+            <img src="images/logos/spmi.png" alt="Логотип Горного Университета 2" class="logo">
         </div>
     </header>
 
@@ -439,16 +499,23 @@
                 <div class="hero-text">
                     <h1 class="title" style="font-size: 1.5rem; line-height: 1.45;">
                         Результаты апробации<br>
-                        Молодежного Глобального Прогноза Развития Энергетики на тему: "Развитие энергетического партнерства стран БРИКС"
+                        Молодежного Глобального Прогноза Развития Энергетики
                     </h1>
-                    <p class="subtitle">С исследованием в форме брошюры Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики и партнерских проектах университета.</p>
+                    <ul class="topics">
+                        <li>«Развитие энергетического партнерства стран БРИКС»</li>
+                        <li>«Изучение топливного потенциала регионов России и разработка рекомендаций для рационального использования местных видов топлива и организации эффективной структуры поставок энергоносителей»</li>
+                    </ul>
+                    <p class="subtitle">С исследованиями в форме брошюр Санкт-Петербургского горного университета ознакомились ключевые лидеры отрасли и представители органов власти, получившие актуальные материалы о развитии энергетики, топливном потенциале регионов России и партнерских проектах университета.</p>
                 </div>
                 <div class="hero-images">
-                    <a href="https://spmi.ru/?ysclid=mh0jfmzcev355595287" target="_blank" rel="noopener noreferrer">
-                        <img src="https://i.imgur.com/09ipfoo.png" alt="Обложка брошюры 1">
+                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/brochures/brochure-1.jpg" alt="Обложка брошюры «Развитие энергетического партнерства на пространствах БРИКС, СНГ и ЕАЭС»">
                     </a>
-                    <a href="https://spmi.ru/?ysclid=mh0jfmzcev355595287" target="_blank" rel="noopener noreferrer">
-                        <img src="https://i.imgur.com/4sovc9O.jpeg" alt="Обложка брошюры 2">
+                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/brochures/brochure-2.jpg" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
+                    </a>
+                    <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/brochures/brochure-3.jpg" alt="Обложка брошюры «Изучение топливного потенциала регионов России»">
                     </a>
                 </div>
             </div>
@@ -457,20 +524,7 @@
             
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://minenergo.gov.ru/upload/iblock/a6c/247ejhoyen2759a9e83qyhbzio4kd258/Foto-na-sayt.png" alt="Фото Цивилева Сергея Евгеньевича">
-                </div>
-                <div class="info">
-                    <h2 class="name">
-                        <span class="surname">Цивилев</span>
-                        <span class="given-name">Сергей Евгеньевич</span>
-                    </h2>
-                    <p class="title-role">Министр энергетики Российской Федерации</p>
-                </div>
-            </div>
-
-            <div class="person-card">
-                <div class="photo-container">
-                    <img src="https://cdnstatic.rg.ru/uploads/images/2023/04/26/ria_8419354hr_732.jpg" alt="Фото Новака Александра Валентиновича">
+                    <img src="images/people/novak.jpg" loading="lazy" alt="Фото Новака Александра Валентиновича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -483,7 +537,33 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://minenergo.gov.ru/upload/iblock/fc3/Grabchak_2.png" alt="Фото Грабчака Евгения Петровича">
+                    <img src="images/people/tsivilev.jpg" loading="lazy" alt="Фото Цивилева Сергея Евгеньевича">
+                </div>
+                <div class="info">
+                    <h2 class="name">
+                        <span class="surname">Цивилев</span>
+                        <span class="given-name">Сергей Евгеньевич</span>
+                    </h2>
+                    <p class="title-role">Министр энергетики Российской Федерации</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <div class="photo-container">
+                    <img src="images/people/ryumin.jpg" loading="lazy" alt="Фото Рюмина Андрея Валерьевича">
+                </div>
+                <div class="info">
+                    <h2 class="name">
+                        <span class="surname">Рюмин</span>
+                        <span class="given-name">Андрей Валерьевич</span>
+                    </h2>
+                    <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <div class="photo-container">
+                    <img src="images/people/grabchak.jpg" loading="lazy" alt="Фото Грабчака Евгения Петровича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -496,7 +576,7 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://minenergo.gov.ru/upload/iblock/76b/SHeremettsev_2.png" alt="Фото Шереметцева Эдуарда Михайловича">
+                    <img src="images/people/sheremettsev.jpg" loading="lazy" alt="Фото Шереметцева Эдуарда Михайловича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -509,20 +589,20 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://rosseti-kuban.ru/media/images/2022/12/22/40673/%D0%A0%D0%AE%D0%9C%D0%98%D0%9D%20+.jpg" alt="Фото Рюмина Андрея Валерьевича">
+                    <img src="images/people/kuzmin.jpg" loading="lazy" alt="Фото Кузьмина Игоря Анатольевича">
                 </div>
                 <div class="info">
                     <h2 class="name">
-                        <span class="surname">Рюмин</span>
-                        <span class="given-name">Андрей Валерьевич</span>
+                        <span class="surname">Кузьмин</span>
+                        <span class="given-name">Игорь Анатольевич</span>
                     </h2>
-                    <p class="title-role">Генеральный директор, Председатель Правления ПАО «Россети»</p>
+                    <p class="title-role">Генеральный директор ПАО «Россети Ленэнерго»</p>
                 </div>
             </div>
-            
+
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://static8.tgcnt.ru/posts/_0/97/9757cd6105755b85dad3e6ceaf83a91c.jpg" alt="Фото Кулапина Алексея Ивановича">
+                    <img src="images/people/kulapin.jpg" loading="lazy" alt="Фото Кулапина Алексея Ивановича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -535,7 +615,7 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://iy.kommersant.ru/Issues.photo/TEMA/2021/180/KMO_120929_03645_1_t218_145312.jpg" alt="Фото Холкина Дмитрия Владимировича">
+                    <img src="images/people/kholkin.jpg" loading="lazy" alt="Фото Холкина Дмитрия Владимировича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -548,7 +628,7 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://static.tildacdn.com/tild6130-3032-4939-b536-366131393236/c8581d90f6e1f39f942d.jpg" alt="Фото Жихарева Алексея Борисовича">
+                    <img src="images/people/zhikharev.jpg" loading="lazy" alt="Фото Жихарева Алексея Борисовича">
                 </div>
                 <div class="info">
                     <h2 class="name">
@@ -561,7 +641,7 @@
 
             <div class="person-card">
                 <div class="photo-container">
-                    <img src="https://yuresk.ru/upload/iblock/ed5/b1d0q86ybyo1ki9wd53x3xthb3bokcry/313c5140_7a3a_4dac_83e1_0afb2d6f1bdc.png" alt="Фото Пилениекса Дениса Викторовича">
+                    <img src="images/people/pileniecks.jpg" loading="lazy" alt="Фото Пилениекса Дениса Викторовича">
                 </div>
                 <div class="info">
                     <h2 class="name">
