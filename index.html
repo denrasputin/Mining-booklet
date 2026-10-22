@@ -234,10 +234,19 @@
             width: 100%;
         }
 
+        /* Without JavaScript the covers form a grid of two columns: the BRICS brochure next to the 2025 diploma,
+           the other brochure next to the 2026 diploma, each pair on one level */
         .covers-stage {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 150px));
+            justify-content: center;
+            align-items: start;
+            gap: 18px 15px;
+        }
+
+        html:not(.js) .hero-images {
+            max-width: 315px;
+            margin-inline: auto;
         }
 
         .cover a {
@@ -926,11 +935,9 @@
                 gap: 10px;
             }
 
-            /* Equal columns: min-width 0 keeps long words from widening one of them */
+            /* min-width 0 keeps a long word from widening one of the two columns */
             .cover {
-                flex: 1 1 0;
                 min-width: 0;
-                max-width: 150px;
             }
 
             .cover a {
@@ -1021,7 +1028,7 @@
                             <ul class="facts">
                                 <li><strong>2&nbsp;темы</strong> исследований Горного университета изданы в&nbsp;виде брошюр</li>
                                 <li><strong>10&nbsp;руководителей</strong> органов власти и&nbsp;компаний отрасли ознакомились с&nbsp;результатами</li>
-                                <li><strong>Победитель</strong>&nbsp;— команда WeWatt в&nbsp;категории «Студенты», Москва, 2025</li>
+                                <li><strong>2&nbsp;победы</strong> команды WeWatt в&nbsp;категории «Студенты»: Москва, 2025 и&nbsp;2026</li>
                             </ul>
                         </div>
                     </details>
@@ -1043,7 +1050,7 @@
                             <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
                                 <picture>
                                     <source type="image/webp" srcset="images/brochures/brochure-2.webp">
-                                    <img src="images/brochures/brochure-2.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики">
+                                    <img src="images/brochures/brochure-2.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики, 2025">
                                 </picture>
                                 <span class="cover-type">Диплом</span>
                                 <span class="cover-title">Победитель в&nbsp;категории «Студенты», 2025</span>
@@ -1057,6 +1064,16 @@
                                 </picture>
                                 <span class="cover-type">Брошюра</span>
                                 <span class="cover-title">Топливный потенциал регионов России</span>
+                            </a>
+                        </div>
+                        <div class="cover">
+                            <a href="https://spmi.ru/" target="_blank" rel="noopener noreferrer">
+                                <picture>
+                                    <source type="image/webp" srcset="images/brochures/diploma-2026.webp">
+                                    <img src="images/brochures/diploma-2026.jpg" width="150" height="212" alt="Диплом победителя Молодежного глобального прогноза развития энергетики, 2026">
+                                </picture>
+                                <span class="cover-type">Диплом</span>
+                                <span class="cover-title">Победитель в&nbsp;категории «Студенты», 2026</span>
                             </a>
                         </div>
                     </div>
@@ -1267,10 +1284,28 @@
                     if (offset > count / 2) offset -= count;
                     if (offset < -count / 2) offset += count;
 
+                    let previous = slide.dataset.offset === undefined ? offset : Number(slide.dataset.offset);
+
+                    // Out of sight a cover is both "far left" and "far right" (four covers: -2 and 2 are the same
+                    // place), so it leaves on the side it was on and comes back from the side it will enter
+                    if (Math.abs(offset) >= 2 && Math.abs(previous) <= 1 && previous * offset < 0) {
+                        offset = -offset;
+                    }
+
+                    if (Math.abs(previous) >= 2 && Math.abs(offset) <= 1 && previous * offset < 0) {
+                        previous = Math.sign(offset) * 2;
+                        slide.style.transition = 'none'; // moves unseen to the other side, then comes in
+                        slide.style.setProperty('--pos', (previous + shift).toFixed(3));
+                        slide.style.setProperty('--dist', '1');
+                        slide.style.setProperty('--tilt', Math.sign(offset).toString());
+                        slide.style.setProperty('--alpha', '0');
+                        void slide.offsetWidth;
+                        slide.style.transition = '';
+                    }
+
                     const pos = offset + shift;
                     const away = Math.abs(pos);
-                    const previous = slide.dataset.offset === undefined ? offset : Number(slide.dataset.offset);
-                    // A cover that jumps to the other side goes round behind the rest
+                    // A visible cover that jumps to the other side goes round behind the rest
                     const goesRound = Math.abs(offset - previous) > 1;
 
                     slide.dataset.offset = offset;
